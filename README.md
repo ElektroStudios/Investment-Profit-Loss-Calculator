@@ -6,9 +6,9 @@ It can help users to calculate the potential gains or the risk of losses when op
 
 ### Screenshots:
 
-![](Preview/Investment-Profit-Calculator.png)
-
 ![](Preview/BTC1.png)  ![](Preview/BTC2.png)
+
+![](Preview/Investment-Profit-Calculator.png)
 
 ### Installation Requeriments:
 
