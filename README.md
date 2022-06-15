@@ -1,6 +1,8 @@
 # Investment Profit Calculator
 
-Investment Profit Calculator is a simple Profit / Loss calculator for asset investments.
+This program is a simple Profit / Loss calculator for asset investments.
+
+It will help you to calculate your possible gain or losses when operating in a online broker or investment platform, so it can help to determine a strategy.
 
 ### Screenshots:
 
