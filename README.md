@@ -2,11 +2,13 @@
 
 This program is a simple Profit / Loss calculator for asset investments.
 
-It will help you to calculate your possible gain or losses when operating in a online broker or investment platform, so it can help to determine a strategy.
+It can help users to calculate the possible gain or losses when operating in a broker or investment platform, so it can also help to define a strategy.
 
 ### Screenshots:
 
 ![](Preview/Investment-Profit-Calculator.png)
+
+![](Preview/BTC1.png)  ![](Preview/BTC2.png)
 
 ### Installation Requeriments:
 
