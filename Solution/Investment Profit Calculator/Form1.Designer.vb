@@ -39,28 +39,30 @@ Partial Class Form1
         Me.RadioButtonTargetPriceFixed = New System.Windows.Forms.RadioButton()
         Me.RadioButtonTargetPricePercent = New System.Windows.Forms.RadioButton()
         Me.PanelTargetPrice = New System.Windows.Forms.Panel()
-        Me.TextBoxTargetPrice = New CustomTextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.CheckBoxAlwaysOnTop = New System.Windows.Forms.CheckBox()
         Me.ButtonMakeScreenshot = New System.Windows.Forms.Button()
-        Me.TextBoxInvested = New CustomTextBox()
-        Me.TextBoxCurrentPrice = New CustomTextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.NumericUpDownInvestedMoney = New System.Windows.Forms.NumericUpDown()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TextBoxTargetPrice = New CustomTextBox()
+        Me.TextBoxCurrentPrice = New CustomTextBox()
         CType(Me.NumericUpDownLeverage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDownTargetPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelTargetPrice.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDownInvestedMoney, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ButtonClear
         '
         Me.ButtonClear.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.ButtonClear.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonClear.Location = New System.Drawing.Point(17, 401)
+        Me.ButtonClear.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.ButtonClear.Location = New System.Drawing.Point(12, 401)
         Me.ButtonClear.Name = "ButtonClear"
-        Me.ButtonClear.Size = New System.Drawing.Size(150, 70)
+        Me.ButtonClear.Size = New System.Drawing.Size(154, 30)
         Me.ButtonClear.TabIndex = 10
-        Me.ButtonClear.Text = "CLEAR VALUES"
+        Me.ButtonClear.Text = "Clear Values"
         Me.ButtonClear.UseVisualStyleBackColor = True
         '
         'LabelProfitValue
@@ -69,7 +71,7 @@ Partial Class Form1
         Me.LabelProfitValue.ForeColor = System.Drawing.Color.LightGray
         Me.LabelProfitValue.Location = New System.Drawing.Point(16, 307)
         Me.LabelProfitValue.Name = "LabelProfitValue"
-        Me.LabelProfitValue.Size = New System.Drawing.Size(311, 82)
+        Me.LabelProfitValue.Size = New System.Drawing.Size(311, 69)
         Me.LabelProfitValue.TabIndex = 9
         Me.LabelProfitValue.Text = "..."
         '
@@ -132,6 +134,7 @@ Partial Class Form1
         'NumericUpDownTargetPrice
         '
         Me.NumericUpDownTargetPrice.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.NumericUpDownTargetPrice.DecimalPlaces = 2
         Me.NumericUpDownTargetPrice.Enabled = False
         Me.NumericUpDownTargetPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!)
         Me.NumericUpDownTargetPrice.Location = New System.Drawing.Point(114, 42)
@@ -190,16 +193,6 @@ Partial Class Form1
         Me.PanelTargetPrice.Size = New System.Drawing.Size(310, 79)
         Me.PanelTargetPrice.TabIndex = 7
         '
-        'TextBoxTargetPrice
-        '
-        Me.TextBoxTargetPrice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.TextBoxTargetPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxTargetPrice.Hint = "Target Price"
-        Me.TextBoxTargetPrice.Location = New System.Drawing.Point(114, 5)
-        Me.TextBoxTargetPrice.Name = "TextBoxTargetPrice"
-        Me.TextBoxTargetPrice.Size = New System.Drawing.Size(193, 31)
-        Me.TextBoxTargetPrice.TabIndex = 1
-        '
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -214,11 +207,12 @@ Partial Class Form1
         'CheckBoxAlwaysOnTop
         '
         Me.CheckBoxAlwaysOnTop.AutoSize = True
-        Me.CheckBoxAlwaysOnTop.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!)
+        Me.CheckBoxAlwaysOnTop.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CheckBoxAlwaysOnTop.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
         Me.CheckBoxAlwaysOnTop.ForeColor = System.Drawing.Color.LightGray
-        Me.CheckBoxAlwaysOnTop.Location = New System.Drawing.Point(17, 477)
+        Me.CheckBoxAlwaysOnTop.Location = New System.Drawing.Point(12, 437)
         Me.CheckBoxAlwaysOnTop.Name = "CheckBoxAlwaysOnTop"
-        Me.CheckBoxAlwaysOnTop.Size = New System.Drawing.Size(258, 29)
+        Me.CheckBoxAlwaysOnTop.Size = New System.Drawing.Size(193, 24)
         Me.CheckBoxAlwaysOnTop.TabIndex = 12
         Me.CheckBoxAlwaysOnTop.Text = "Window Always On Top"
         Me.CheckBoxAlwaysOnTop.UseVisualStyleBackColor = True
@@ -227,33 +221,13 @@ Partial Class Form1
         '
         Me.ButtonMakeScreenshot.Cursor = System.Windows.Forms.Cursors.Hand
         Me.ButtonMakeScreenshot.Enabled = False
-        Me.ButtonMakeScreenshot.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.ButtonMakeScreenshot.Location = New System.Drawing.Point(177, 401)
+        Me.ButtonMakeScreenshot.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.ButtonMakeScreenshot.Location = New System.Drawing.Point(176, 401)
         Me.ButtonMakeScreenshot.Name = "ButtonMakeScreenshot"
-        Me.ButtonMakeScreenshot.Size = New System.Drawing.Size(150, 70)
+        Me.ButtonMakeScreenshot.Size = New System.Drawing.Size(154, 30)
         Me.ButtonMakeScreenshot.TabIndex = 11
-        Me.ButtonMakeScreenshot.Text = "Make Screenshot"
+        Me.ButtonMakeScreenshot.Text = "Take Screenshot"
         Me.ButtonMakeScreenshot.UseVisualStyleBackColor = True
-        '
-        'TextBoxInvested
-        '
-        Me.TextBoxInvested.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.TextBoxInvested.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxInvested.Hint = "Amount $$$"
-        Me.TextBoxInvested.Location = New System.Drawing.Point(17, 43)
-        Me.TextBoxInvested.Name = "TextBoxInvested"
-        Me.TextBoxInvested.Size = New System.Drawing.Size(180, 31)
-        Me.TextBoxInvested.TabIndex = 1
-        '
-        'TextBoxCurrentPrice
-        '
-        Me.TextBoxCurrentPrice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.TextBoxCurrentPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxCurrentPrice.Hint = "Current Price"
-        Me.TextBoxCurrentPrice.Location = New System.Drawing.Point(17, 116)
-        Me.TextBoxCurrentPrice.Name = "TextBoxCurrentPrice"
-        Me.TextBoxCurrentPrice.Size = New System.Drawing.Size(310, 31)
-        Me.TextBoxCurrentPrice.TabIndex = 5
         '
         'PictureBox1
         '
@@ -265,12 +239,55 @@ Partial Class Form1
         Me.PictureBox1.TabIndex = 13
         Me.PictureBox1.TabStop = False
         '
+        'NumericUpDownInvestedMoney
+        '
+        Me.NumericUpDownInvestedMoney.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.NumericUpDownInvestedMoney.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!)
+        Me.NumericUpDownInvestedMoney.Location = New System.Drawing.Point(17, 43)
+        Me.NumericUpDownInvestedMoney.Maximum = New Decimal(New Integer() {-727379969, 232, 0, 0})
+        Me.NumericUpDownInvestedMoney.Name = "NumericUpDownInvestedMoney"
+        Me.NumericUpDownInvestedMoney.Size = New System.Drawing.Size(165, 31)
+        Me.NumericUpDownInvestedMoney.TabIndex = 14
+        '
+        'Label5
+        '
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.ForeColor = System.Drawing.Color.LightGray
+        Me.Label5.Location = New System.Drawing.Point(184, 43)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(20, 31)
+        Me.Label5.TabIndex = 5
+        Me.Label5.Text = "$"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TextBoxTargetPrice
+        '
+        Me.TextBoxTargetPrice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.TextBoxTargetPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBoxTargetPrice.Hint = "Target Price"
+        Me.TextBoxTargetPrice.Location = New System.Drawing.Point(114, 5)
+        Me.TextBoxTargetPrice.Name = "TextBoxTargetPrice"
+        Me.TextBoxTargetPrice.Size = New System.Drawing.Size(193, 31)
+        Me.TextBoxTargetPrice.TabIndex = 1
+        '
+        'TextBoxCurrentPrice
+        '
+        Me.TextBoxCurrentPrice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.TextBoxCurrentPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBoxCurrentPrice.Hint = "Current Price"
+        Me.TextBoxCurrentPrice.Location = New System.Drawing.Point(17, 116)
+        Me.TextBoxCurrentPrice.Name = "TextBoxCurrentPrice"
+        Me.TextBoxCurrentPrice.Size = New System.Drawing.Size(310, 31)
+        Me.TextBoxCurrentPrice.TabIndex = 5
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer), CType(CType(43, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(342, 514)
+        Me.ClientSize = New System.Drawing.Size(342, 468)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.NumericUpDownInvestedMoney)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.ButtonMakeScreenshot)
         Me.Controls.Add(Me.CheckBoxAlwaysOnTop)
@@ -281,7 +298,6 @@ Partial Class Form1
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.LabelProfitValue)
         Me.Controls.Add(Me.NumericUpDownLeverage)
-        Me.Controls.Add(Me.TextBoxInvested)
         Me.Controls.Add(Me.ButtonClear)
         Me.Controls.Add(Me.TextBoxCurrentPrice)
         Me.Controls.Add(Me.LabelLeverage)
@@ -297,12 +313,11 @@ Partial Class Form1
         Me.PanelTargetPrice.ResumeLayout(False)
         Me.PanelTargetPrice.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDownInvestedMoney, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents TextBoxInvested As CustomTextBox
     Friend WithEvents TextBoxTargetPrice As CustomTextBox
     Friend WithEvents TextBoxCurrentPrice As CustomTextBox
     Friend WithEvents ButtonClear As Button
@@ -321,4 +336,6 @@ Partial Class Form1
     Friend WithEvents CheckBoxAlwaysOnTop As CheckBox
     Friend WithEvents ButtonMakeScreenshot As Button
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents NumericUpDownInvestedMoney As NumericUpDown
+    Friend WithEvents Label5 As Label
 End Class

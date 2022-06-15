@@ -1,0 +1,22 @@
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\bin\Release\Investment Profit Calculator.exe.config
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\bin\Release\Investment Profit Calculator.exe
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\bin\Release\Investment Profit Calculator.pdb
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\bin\Release\Investment Profit Calculator.xml
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\obj\Release\Form1.resources
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\obj\Release\Resources.resources
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\obj\Release\Investment Profit Calculator.vbproj.GenerateResource.cache
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\obj\Release\Investment Profit Calculator.vbproj.CoreCompileInputs.cache
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\obj\Release\Investment Profit Calculator.exe
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\obj\Release\Investment Profit Calculator.xml
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Investment Profit Calculator\obj\Release\Investment Profit Calculator.pdb
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\bin\Release\Investment Profit Calculator.exe.config
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\bin\Release\Investment Profit Calculator.exe
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\bin\Release\Investment Profit Calculator.pdb
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\bin\Release\Investment Profit Calculator.xml
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\obj\Release\Form1.resources
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\obj\Release\Resources.resources
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\obj\Release\Investment Profit Calculator.vbproj.GenerateResource.cache
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\obj\Release\Investment Profit Calculator.vbproj.CoreCompileInputs.cache
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\obj\Release\Investment Profit Calculator.exe
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\obj\Release\Investment Profit Calculator.xml
+C:\Users\Administrador\Desktop\Investment Profit Calculator\Solution\Investment Profit Calculator\obj\Release\Investment Profit Calculator.pdb

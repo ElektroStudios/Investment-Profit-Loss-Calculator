@@ -14,33 +14,30 @@ Public Class Form1
         Application.CurrentCulture = CultureInfo.InvariantCulture
     End Sub
 
-    Private Sub TextBoxInvested_TextChanged(sender As Object, e As EventArgs) Handles TextBoxInvested.TextChanged
-        Double.TryParse(DirectCast(sender, TextBox).Text, Me.invested)
+    Private Sub NumericUpDownInvestedMoney_KeyUp(sender As Object, e As EventArgs) Handles NumericUpDownInvestedMoney.KeyUp
+        Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
+        Me.invested = num.Value
         Me.CalculateProfit()
     End Sub
 
     Private Sub TextBoxcurrentPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCurrentPrice.TextChanged
         Double.TryParse(DirectCast(sender, TextBox).Text.Replace(",", "."), Me.currentPrice)
+
+        If Me.targetPrice <> 0 Then
+            Me.UpdateNumericUpDownTargetPrice()
+        End If
         Me.CalculateProfit()
     End Sub
 
     Private Sub TextBoxtargetPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxTargetPrice.TextChanged
-        Dim tb As TextBox = DirectCast(sender, TextBox)
+        Dim tb As CustomTextBox = DirectCast(sender, TextBox)
         Double.TryParse(tb.Text.Replace(",", "."), Me.targetPrice)
         If Me.targetPrice < 0 Then
             Me.targetPrice = 0
             tb.Text = 0
         End If
 
-        Dim change As Double = ((Me.targetPrice - Me.currentPrice) / Math.Abs(Me.currentPrice)) * 100
-        If Double.IsNaN(change) Then
-            Me.NumericUpDownTargetPrice.Value = 0
-        Else
-            Try
-                Me.NumericUpDownTargetPrice.Value = change
-            Catch ex As Exception
-            End Try
-        End If
+        Me.UpdateNumericUpDownTargetPrice()
 
         If tb.Enabled Then
             Me.CalculateProfit()
@@ -58,8 +55,8 @@ Public Class Form1
 
     Private Sub NumericUpDownTargetPrice_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownTargetPrice.ValueChanged
         Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
-        Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (num.Value / 100))
         If num.Enabled Then
+            Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (num.Value / 100))
             Me.CalculateProfit()
         End If
     End Sub
@@ -76,28 +73,9 @@ Public Class Form1
         Me.CalculateProfit()
     End Sub
 
-    Private Sub TextBox_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBoxInvested.KeyDown,
-                                                                           TextBoxCurrentPrice.KeyDown,
-                                                                           TextBoxTargetPrice.KeyDown
-        Select Case e.KeyData
-
-            Case Keys.Up
-                Dim nextCtrl As CustomTextBox = Me.GetNextControl(Of CustomTextBox)(forward:=False, tabStopOnly:=True, wrap:=False)
-                nextCtrl.Select()
-
-            Case Keys.Down
-                Dim nextCtrl As CustomTextBox = Me.GetNextControl(Of CustomTextBox)(forward:=True, tabStopOnly:=True, wrap:=False)
-                nextCtrl.Select()
-
-            Case Else
-
-        End Select
-
-    End Sub
-
     Private Sub ButtonClear_Click(sender As Object, e As EventArgs) Handles ButtonClear.Click
 
-        Me.TextBoxInvested.Clear()
+        Me.NumericUpDownInvestedMoney.Value = 0
         Me.TextBoxCurrentPrice.Clear()
         Me.TextBoxTargetPrice.Clear()
         Me.NumericUpDownLeverage.Value = 1
@@ -107,6 +85,18 @@ Public Class Form1
 
     Private Sub CheckBoxAlwaysOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxAlwaysOnTop.CheckedChanged
         Me.TopMost = DirectCast(sender, CheckBox).Checked
+    End Sub
+
+    Private Sub UpdateNumericUpDownTargetPrice()
+        Dim change As Double = ((Me.targetPrice - Me.currentPrice) / Math.Abs(Me.currentPrice)) * 100
+        If Double.IsNaN(change) Then
+            Me.NumericUpDownTargetPrice.Value = 0
+        Else
+            Try
+                Me.NumericUpDownTargetPrice.Value = change
+            Catch ex As Exception
+            End Try
+        End If
     End Sub
 
     Private Sub CalculateProfit()

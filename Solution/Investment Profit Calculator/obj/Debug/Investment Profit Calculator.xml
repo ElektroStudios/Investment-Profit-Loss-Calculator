@@ -1,0 +1,96 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Investment Profit Calculator
+</name>
+</assembly>
+<members>
+<member name="T:My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:FormExtensions.GetNextControl``1(System.Windows.Forms.Form,System.Boolean,System.Boolean,System.Boolean)">
+ ----------------------------------------------------------------------------------------------------
+ <summary>
+ Retrieves the next control of the specified type forward or back in the tab order of child controls.
+ </summary>
+ ----------------------------------------------------------------------------------------------------
+ <typeparam name="T">
+ The type of the <see cref="T:System.Windows.Forms.Control"/> to search.
+ </typeparam>
+ 
+ <param name="form">
+ The <see cref="T:System.Windows.Forms.Form"/> to start the search with.
+ </param>
+ 
+ <param name="forward">
+ True to search forward in the tab order; False to search backward.
+ </param>
+ 
+ <param name="tabStopOnly">
+ True to ignore the controls with the <see cref="P:System.Windows.Forms.Control.TabStop"/> property set to false; 
+ otherwise, False.
+ </param>
+ 
+ <param name="wrap">
+ True to continue searching from the first control in the tab order after the last control has been reached; 
+ otherwise, False.
+ </param>
+ ----------------------------------------------------------------------------------------------------
+ <returns>
+ The next <see cref="T:System.Windows.Forms.Control"/> in the tab order.
+ </returns>
+ ----------------------------------------------------------------------------------------------------
+</member>
+<member name="M:FormExtensions.GetNextControl``1(System.Windows.Forms.Form,System.Boolean,System.Boolean,System.Boolean,System.Windows.Forms.Control.ControlCollection)">
+ ----------------------------------------------------------------------------------------------------
+ <summary>
+ Retrieves the next control of the specified type forward or back in the tab order of child controls.
+ </summary>
+ ----------------------------------------------------------------------------------------------------
+ <typeparam name="T">
+ The type of the <see cref="T:System.Windows.Forms.Control"/> to search.
+ </typeparam>
+ 
+ <param name="form">
+ The <see cref="T:System.Windows.Forms.Form"/> to start the search with.
+ </param>
+ 
+ <param name="forward">
+ True to search forward in the tab order; False to search backward.
+ </param>
+ 
+ <param name="tabStopOnly">
+ True to ignore the controls with the <see cref="P:System.Windows.Forms.Control.TabStop"/> property set to false; 
+ otherwise, False.
+ </param>
+ 
+ <param name="wrap">
+ True to continue searching from the first control in the tab order after the last control has been reached; 
+ otherwise, False.
+ </param>
+ 
+ <param name="controlCollection">
+ The <see cref="T:System.Windows.Forms.Form.ControlCollection"/> to search within.
+ </param>
+ ----------------------------------------------------------------------------------------------------
+ <returns>
+ The next <see cref="T:System.Windows.Forms.Control"/> in the tab order.
+ </returns>
+ ----------------------------------------------------------------------------------------------------
+</member>
+</members>
+</doc>
