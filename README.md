@@ -2,7 +2,7 @@
 
 This program is a simple Profit / Loss calculator for asset investments.
 
-It can help users to calculate the possible gain or losses when operating in a broker or investment platform, so it can also help to define a strategy.
+It can help users to calculate the potential gains or the risk of losses when operating in a broker or investment platform, so it can help to define a strategy.
 
 ### Screenshots:
 
