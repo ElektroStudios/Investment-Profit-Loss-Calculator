@@ -61,7 +61,7 @@ Partial Class Form1
         Me.ButtonClear.Location = New System.Drawing.Point(12, 401)
         Me.ButtonClear.Name = "ButtonClear"
         Me.ButtonClear.Size = New System.Drawing.Size(154, 30)
-        Me.ButtonClear.TabIndex = 10
+        Me.ButtonClear.TabIndex = 11
         Me.ButtonClear.Text = "Clear Values"
         Me.ButtonClear.UseVisualStyleBackColor = True
         '
@@ -72,7 +72,7 @@ Partial Class Form1
         Me.LabelProfitValue.Location = New System.Drawing.Point(16, 307)
         Me.LabelProfitValue.Name = "LabelProfitValue"
         Me.LabelProfitValue.Size = New System.Drawing.Size(311, 69)
-        Me.LabelProfitValue.TabIndex = 9
+        Me.LabelProfitValue.TabIndex = 10
         Me.LabelProfitValue.Text = "..."
         '
         'NumericUpDownLeverage
@@ -84,7 +84,7 @@ Partial Class Form1
         Me.NumericUpDownLeverage.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumericUpDownLeverage.Name = "NumericUpDownLeverage"
         Me.NumericUpDownLeverage.Size = New System.Drawing.Size(106, 31)
-        Me.NumericUpDownLeverage.TabIndex = 3
+        Me.NumericUpDownLeverage.TabIndex = 4
         Me.NumericUpDownLeverage.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'LabelLeverage
@@ -94,7 +94,7 @@ Partial Class Form1
         Me.LabelLeverage.Location = New System.Drawing.Point(216, 9)
         Me.LabelLeverage.Name = "LabelLeverage"
         Me.LabelLeverage.Size = New System.Drawing.Size(111, 31)
-        Me.LabelLeverage.TabIndex = 2
+        Me.LabelLeverage.TabIndex = 3
         Me.LabelLeverage.Text = "Leverage:"
         Me.LabelLeverage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -116,7 +116,7 @@ Partial Class Form1
         Me.Label2.Location = New System.Drawing.Point(16, 82)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(311, 31)
-        Me.Label2.TabIndex = 4
+        Me.Label2.TabIndex = 5
         Me.Label2.Text = "Current Asset Price:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -127,7 +127,7 @@ Partial Class Form1
         Me.Label3.Location = New System.Drawing.Point(16, 276)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(311, 31)
-        Me.Label3.TabIndex = 8
+        Me.Label3.TabIndex = 9
         Me.Label3.Text = "Profit / Loss:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -191,7 +191,7 @@ Partial Class Form1
         Me.PanelTargetPrice.Location = New System.Drawing.Point(17, 189)
         Me.PanelTargetPrice.Name = "PanelTargetPrice"
         Me.PanelTargetPrice.Size = New System.Drawing.Size(310, 79)
-        Me.PanelTargetPrice.TabIndex = 7
+        Me.PanelTargetPrice.TabIndex = 8
         '
         'Label4
         '
@@ -200,7 +200,7 @@ Partial Class Form1
         Me.Label4.Location = New System.Drawing.Point(16, 155)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(311, 31)
-        Me.Label4.TabIndex = 6
+        Me.Label4.TabIndex = 7
         Me.Label4.Text = "Target Asset Price:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -213,7 +213,7 @@ Partial Class Form1
         Me.CheckBoxAlwaysOnTop.Location = New System.Drawing.Point(12, 437)
         Me.CheckBoxAlwaysOnTop.Name = "CheckBoxAlwaysOnTop"
         Me.CheckBoxAlwaysOnTop.Size = New System.Drawing.Size(193, 24)
-        Me.CheckBoxAlwaysOnTop.TabIndex = 12
+        Me.CheckBoxAlwaysOnTop.TabIndex = 13
         Me.CheckBoxAlwaysOnTop.Text = "Window Always On Top"
         Me.CheckBoxAlwaysOnTop.UseVisualStyleBackColor = True
         '
@@ -225,7 +225,7 @@ Partial Class Form1
         Me.ButtonMakeScreenshot.Location = New System.Drawing.Point(176, 401)
         Me.ButtonMakeScreenshot.Name = "ButtonMakeScreenshot"
         Me.ButtonMakeScreenshot.Size = New System.Drawing.Size(154, 30)
-        Me.ButtonMakeScreenshot.TabIndex = 11
+        Me.ButtonMakeScreenshot.TabIndex = 12
         Me.ButtonMakeScreenshot.Text = "Take Screenshot"
         Me.ButtonMakeScreenshot.UseVisualStyleBackColor = True
         '
@@ -247,7 +247,7 @@ Partial Class Form1
         Me.NumericUpDownInvestedMoney.Maximum = New Decimal(New Integer() {-727379969, 232, 0, 0})
         Me.NumericUpDownInvestedMoney.Name = "NumericUpDownInvestedMoney"
         Me.NumericUpDownInvestedMoney.Size = New System.Drawing.Size(165, 31)
-        Me.NumericUpDownInvestedMoney.TabIndex = 14
+        Me.NumericUpDownInvestedMoney.TabIndex = 1
         '
         'Label5
         '
@@ -256,7 +256,7 @@ Partial Class Form1
         Me.Label5.Location = New System.Drawing.Point(184, 43)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(20, 31)
-        Me.Label5.TabIndex = 5
+        Me.Label5.TabIndex = 2
         Me.Label5.Text = "$"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -278,7 +278,7 @@ Partial Class Form1
         Me.TextBoxCurrentPrice.Location = New System.Drawing.Point(17, 116)
         Me.TextBoxCurrentPrice.Name = "TextBoxCurrentPrice"
         Me.TextBoxCurrentPrice.Size = New System.Drawing.Size(310, 31)
-        Me.TextBoxCurrentPrice.TabIndex = 5
+        Me.TextBoxCurrentPrice.TabIndex = 6
         '
         'Form1
         '
@@ -302,12 +302,13 @@ Partial Class Form1
         Me.Controls.Add(Me.TextBoxCurrentPrice)
         Me.Controls.Add(Me.LabelLeverage)
         Me.DoubleBuffered = True
+        Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Investment Profit Calculator"
+        Me.Text = "Investment Profit & Loss Calculator"
         CType(Me.NumericUpDownLeverage, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDownTargetPrice, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelTargetPrice.ResumeLayout(False)

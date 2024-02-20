@@ -9,15 +9,14 @@ Public Class Form1
     Private currentPrice As Double
     Private targetPrice As Double
 
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Application.CurrentCulture = CultureInfo.InvariantCulture
     End Sub
 
-    Private Sub NumericUpDownInvestedMoney_KeyUp(sender As Object, e As EventArgs) Handles NumericUpDownInvestedMoney.KeyUp
+    Private Sub NumericUpDownInvestedMoney_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownInvestedMoney.ValueChanged
         Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
         Me.invested = num.Value
-        Me.CalculateProfit()
+        Me.CalculatePL()
     End Sub
 
     Private Sub TextBoxcurrentPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCurrentPrice.TextChanged
@@ -26,7 +25,7 @@ Public Class Form1
         If Me.targetPrice <> 0 Then
             Me.UpdateNumericUpDownTargetPrice()
         End If
-        Me.CalculateProfit()
+        Me.CalculatePL()
     End Sub
 
     Private Sub TextBoxtargetPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxTargetPrice.TextChanged
@@ -40,47 +39,40 @@ Public Class Form1
         Me.UpdateNumericUpDownTargetPrice()
 
         If tb.Enabled Then
-            Me.CalculateProfit()
+            Me.CalculatePL()
         End If
     End Sub
 
     Private Sub NumericUpDownLeverage_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownLeverage.ValueChanged
-        Me.CalculateProfit()
-    End Sub
-
-    Private Sub NumericUpDownTargetPrice_KeyUp(sender As Object, e As EventArgs) Handles NumericUpDownTargetPrice.KeyUp
-        Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
-        Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (num.Value / 100))
+        Me.CalculatePL()
     End Sub
 
     Private Sub NumericUpDownTargetPrice_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownTargetPrice.ValueChanged
         Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
         If num.Enabled Then
             Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (num.Value / 100))
-            Me.CalculateProfit()
+            Me.CalculatePL()
         End If
     End Sub
 
     Private Sub RadioButtonTargetPriceFixed_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButtonTargetPriceFixed.CheckedChanged
         Me.TextBoxTargetPrice.Enabled = True
         Me.NumericUpDownTargetPrice.Enabled = False
-        Me.CalculateProfit()
+        Me.CalculatePL()
     End Sub
 
     Private Sub RadioButtonTargetPricePercent_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButtonTargetPricePercent.CheckedChanged
         Me.TextBoxTargetPrice.Enabled = False
         Me.NumericUpDownTargetPrice.Enabled = True
-        Me.CalculateProfit()
+        Me.CalculatePL()
     End Sub
 
     Private Sub ButtonClear_Click(sender As Object, e As EventArgs) Handles ButtonClear.Click
-
         Me.NumericUpDownInvestedMoney.Value = 0
         Me.TextBoxCurrentPrice.Clear()
         Me.TextBoxTargetPrice.Clear()
         Me.NumericUpDownLeverage.Value = 1
         Me.ButtonMakeScreenshot.Enabled = False
-
     End Sub
 
     Private Sub CheckBoxAlwaysOnTop_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxAlwaysOnTop.CheckedChanged
@@ -99,14 +91,14 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub CalculateProfit()
+    Private Sub CalculatePL()
 
         If (Me.invested = 0) OrElse
             (Me.currentPrice = 0) OrElse
             (String.IsNullOrEmpty(Me.TextBoxTargetPrice.Text)) OrElse
             (String.IsNullOrEmpty(Me.NumericUpDownTargetPrice.Value = 0)) Then
 
-            Me.LabelProfitValue.Text = "..."
+            Me.LabelProfitValue.Text = "N/A"
             Me.LabelProfitValue.ForeColor = Color.LightGray
             Me.ButtonMakeScreenshot.Enabled = False
 
@@ -141,7 +133,7 @@ Public Class Form1
 
         Dim dlg As New SaveFileDialog With {
             .DefaultExt = "jpg",
-            .FileName = My.Application.Info.Title,
+            .FileName = $"P&L {Date.Now:dd-MMM-yyyy hh꞉mm꞉ss}",
             .Title = "Select where to save the screenshot file...",
             .AddExtension = True,
             .CheckPathExists = True,
