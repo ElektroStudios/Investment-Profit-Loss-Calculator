@@ -18,13 +18,13 @@ It can help you to calculate the potential gains or the risk of losses when oper
 
 ## 🤖 Getting Started
 
-Download the latest extension release by clicking [here](https://github.com/ElektroStudios/Investment-Profit-Loss-Calculator/releases/latest),
+Download the latest program release by clicking [here](https://github.com/ElektroStudios/Investment-Profit-Loss-Calculator/releases/latest),
+
+Once you have opened the program, you will see various controls where you can set the investment amount (that is, the money that you've invested), the leverage (if any), the current asset price that you invested in, and the target / expected asset price. The program will automatically calculate and show you the profit & loss whenever you modify those values.
 
 ## 🔄 Change Log
 
 Explore the complete list of changes, bug fixes, and improvements across different releases by clicking [here](/Docs/CHANGELOG.md).
-
-Once you have opened the program, you will see various controls where you can set the investment amount (that is, the money that you've invested), the leverage (if any), the current asset price that you invested in, and the target / expected asset price. The program will automatically calculate and show you the profit & loss whenever you modify those values.
 
 ## ⚠️ Disclaimer:
 
