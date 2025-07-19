@@ -7,50 +7,13 @@ Option Infer Off
 
 #End Region
 
+Imports System.Collections.Generic
 Imports System.ComponentModel
+Imports System.Diagnostics
+Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Public Module FormExtensions
-
-    ''' ----------------------------------------------------------------------------------------------------
-    ''' <summary>
-    ''' Retrieves the next control of the specified type forward or back in the tab order of child controls.
-    ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
-    ''' <typeparam name="T">
-    ''' The type of the <see cref="System.Windows.Forms.Control"/> to search.
-    ''' </typeparam>
-    ''' 
-    ''' <param name="form">
-    ''' The <see cref="System.Windows.Forms.Form"/> to start the search with.
-    ''' </param>
-    ''' 
-    ''' <param name="forward">
-    ''' True to search forward in the tab order; False to search backward.
-    ''' </param>
-    ''' 
-    ''' <param name="tabStopOnly">
-    ''' True to ignore the controls with the <see cref="System.Windows.Forms.Control.TabStop"/> property set to false; 
-    ''' otherwise, False.
-    ''' </param>
-    ''' 
-    ''' <param name="wrap">
-    ''' True to continue searching from the first control in the tab order after the last control has been reached; 
-    ''' otherwise, False.
-    ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
-    ''' <returns>
-    ''' The next <see cref="System.Windows.Forms.Control"/> in the tab order.
-    ''' </returns>
-    ''' ----------------------------------------------------------------------------------------------------
-    <DebuggerStepThrough>
-    <Extension>
-    <EditorBrowsable(EditorBrowsableState.Always)>
-    Public Function GetNextControl(Of T As System.Windows.Forms.Control)(form As System.Windows.Forms.Form, forward As Boolean, tabStopOnly As Boolean, wrap As Boolean) As System.Windows.Forms.Control
-
-        Return FormExtensions.GetNextControl(Of T)(form, forward, tabStopOnly, wrap, form.Controls)
-
-    End Function
 
     ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>

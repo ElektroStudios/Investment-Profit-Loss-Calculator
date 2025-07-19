@@ -1,6 +1,8 @@
 ﻿
 Imports System.Drawing.Imaging
 Imports System.Globalization
+Imports System.Runtime.InteropServices
+
 Imports FormExtensions
 
 Public Class Form1
@@ -13,15 +15,23 @@ Public Class Form1
         Application.CurrentCulture = CultureInfo.InvariantCulture
     End Sub
 
-    Private Sub NumericUpDownInvestedMoney_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownInvestedMoney.ValueChanged
+    Private Sub NumericUpDownInvestedMoney_TextChanged(sender As Object, e As EventArgs) Handles NumericUpDownInvestedMoney.TextChanged
         Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
         Me.invested = num.Value
         Me.CalculatePL()
     End Sub
 
+    Private Sub NumericUpDownInvestedMoney_LostFocus(sender As Object, e As EventArgs) Handles NumericUpDownInvestedMoney.LostFocus
+        Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
+        If String.IsNullOrWhiteSpace(num.Text) Then
+            num.Text = num.Minimum
+        End If
+    End Sub
+
     Private Sub TextBoxcurrentPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCurrentPrice.TextChanged
         Double.TryParse(DirectCast(sender, TextBox).Text.Replace(",", "."), Me.currentPrice)
 
+        Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (Me.NumericUpDownTargetPrice.Value / 100))
         If Me.targetPrice <> 0 Then
             Me.UpdateNumericUpDownTargetPrice()
         End If
@@ -43,11 +53,18 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub NumericUpDownLeverage_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownLeverage.ValueChanged
+    Private Sub NumericUpDownLeverage_TextChanged(sender As Object, e As EventArgs) Handles NumericUpDownLeverage.TextChanged
         Me.CalculatePL()
     End Sub
 
-    Private Sub NumericUpDownTargetPrice_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownTargetPrice.ValueChanged
+    Private Sub NumericUpDownLeverage_LostFocus(sender As Object, e As EventArgs) Handles NumericUpDownLeverage.LostFocus
+        Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
+        If String.IsNullOrWhiteSpace(num.Text) Then
+            num.Text = num.Minimum
+        End If
+    End Sub
+
+    Private Sub NumericUpDownTargetPrice_TextChanged(sender As Object, e As EventArgs) Handles NumericUpDownTargetPrice.TextChanged
         Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
         If num.Enabled Then
             Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (num.Value / 100))
@@ -148,7 +165,6 @@ Public Class Form1
                 Me.DrawToBitmap(bmp, New Rectangle(Point.Empty, bmp.Size))
                 bmp.Save(dlg.FileName, ImageFormat.Jpeg)
             End Using
-
         End If
 
     End Sub

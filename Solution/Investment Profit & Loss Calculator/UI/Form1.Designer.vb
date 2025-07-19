@@ -39,13 +39,13 @@ Partial Class Form1
         Me.RadioButtonTargetPriceFixed = New System.Windows.Forms.RadioButton()
         Me.RadioButtonTargetPricePercent = New System.Windows.Forms.RadioButton()
         Me.PanelTargetPrice = New System.Windows.Forms.Panel()
+        Me.TextBoxTargetPrice = New CustomTextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.CheckBoxAlwaysOnTop = New System.Windows.Forms.CheckBox()
         Me.ButtonMakeScreenshot = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.NumericUpDownInvestedMoney = New System.Windows.Forms.NumericUpDown()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.TextBoxTargetPrice = New CustomTextBox()
         Me.TextBoxCurrentPrice = New CustomTextBox()
         CType(Me.NumericUpDownLeverage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDownTargetPrice, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -193,6 +193,16 @@ Partial Class Form1
         Me.PanelTargetPrice.Size = New System.Drawing.Size(310, 79)
         Me.PanelTargetPrice.TabIndex = 8
         '
+        'TextBoxTargetPrice
+        '
+        Me.TextBoxTargetPrice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.TextBoxTargetPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBoxTargetPrice.Hint = "Target Price"
+        Me.TextBoxTargetPrice.Location = New System.Drawing.Point(114, 5)
+        Me.TextBoxTargetPrice.Name = "TextBoxTargetPrice"
+        Me.TextBoxTargetPrice.Size = New System.Drawing.Size(193, 31)
+        Me.TextBoxTargetPrice.TabIndex = 1
+        '
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -259,16 +269,6 @@ Partial Class Form1
         Me.Label5.TabIndex = 2
         Me.Label5.Text = "$"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'TextBoxTargetPrice
-        '
-        Me.TextBoxTargetPrice.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.TextBoxTargetPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBoxTargetPrice.Hint = "Target Price"
-        Me.TextBoxTargetPrice.Location = New System.Drawing.Point(114, 5)
-        Me.TextBoxTargetPrice.Name = "TextBoxTargetPrice"
-        Me.TextBoxTargetPrice.Size = New System.Drawing.Size(193, 31)
-        Me.TextBoxTargetPrice.TabIndex = 1
         '
         'TextBoxCurrentPrice
         '
