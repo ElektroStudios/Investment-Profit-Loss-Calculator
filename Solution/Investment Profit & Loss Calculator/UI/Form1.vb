@@ -31,7 +31,9 @@ Public Class Form1
     Private Sub TextBoxcurrentPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCurrentPrice.TextChanged
         Double.TryParse(DirectCast(sender, TextBox).Text.Replace(",", "."), Me.currentPrice)
 
-        Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (Me.NumericUpDownTargetPrice.Value / 100))
+        If Me.RadioButtonTargetPricePercent.Checked Then
+            Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (Me.NumericUpDownTargetPrice.Value / 100))
+        End If
         If Me.targetPrice <> 0 Then
             Me.UpdateNumericUpDownTargetPrice()
         End If

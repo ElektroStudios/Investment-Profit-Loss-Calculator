@@ -1,6 +1,10 @@
 # Investment Profit & Loss Calculator Version History 📋
 
-## v1.3 *(current)* 🆕
+## v1.3.1 *(current)* 🆕
+#### 🛠️ Fixes:
+    • Fixed "Current Asset Price" control behavior when "Fixed" checkbox is selected.
+
+## v1.3 🔄
 #### 🛠️ Fixes:
     • Minor fixes to some controls that didn't properly refresh the calculation after input.
 #### 🌟 Improvements:
