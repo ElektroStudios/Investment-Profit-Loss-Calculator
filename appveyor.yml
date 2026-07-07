@@ -41,3 +41,4 @@ after_build:
 artifacts:
   - path: "%APPVEYOR_PROJECT_NAME%_Build_%APPVEYOR_BUILD_NUMBER%.zip"
     name: "%APPVEYOR_PROJECT_NAME%"
+    
