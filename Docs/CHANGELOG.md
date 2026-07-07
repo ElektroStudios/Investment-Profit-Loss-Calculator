@@ -1,4 +1,4 @@
-# Investment Profit & Loss Calculator Version History 📋
+﻿# Investment Profit & Loss Calculator Version History 📋
 
 ## v1.3.1 *(current)* 🆕
 #### 🛠️ Fixes:
