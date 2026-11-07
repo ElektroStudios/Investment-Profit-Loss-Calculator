@@ -5,6 +5,8 @@ Imports System.Runtime.InteropServices
 
 Imports FormExtensions
 
+Imports Core
+
 Public Class Form1
 
     Private invested As Double
@@ -29,10 +31,10 @@ Public Class Form1
     End Sub
 
     Private Sub TextBoxcurrentPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxCurrentPrice.TextChanged
-        Double.TryParse(DirectCast(sender, TextBox).Text.Replace(",", "."), Me.currentPrice)
+        ProfitLossCalculator.TryParsePrice(DirectCast(sender, TextBox).Text, Me.currentPrice)
 
         If Me.RadioButtonTargetPricePercent.Checked Then
-            Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (Me.NumericUpDownTargetPrice.Value / 100))
+            Me.TextBoxTargetPrice.Text = CStr(ProfitLossCalculator.CalculateTargetPrice(Me.currentPrice, CDbl(Me.NumericUpDownTargetPrice.Value)))
         End If
         If Me.targetPrice <> 0 Then
             Me.UpdateNumericUpDownTargetPrice()
@@ -42,7 +44,7 @@ Public Class Form1
 
     Private Sub TextBoxtargetPrice_TextChanged(sender As Object, e As EventArgs) Handles TextBoxTargetPrice.TextChanged
         Dim tb As CustomTextBox = DirectCast(sender, TextBox)
-        Double.TryParse(tb.Text.Replace(",", "."), Me.targetPrice)
+        ProfitLossCalculator.TryParsePrice(tb.Text, Me.targetPrice)
         If Me.targetPrice < 0 Then
             Me.targetPrice = 0
             tb.Text = 0
@@ -69,7 +71,7 @@ Public Class Form1
     Private Sub NumericUpDownTargetPrice_TextChanged(sender As Object, e As EventArgs) Handles NumericUpDownTargetPrice.TextChanged
         Dim num As NumericUpDown = DirectCast(sender, NumericUpDown)
         If num.Enabled Then
-            Me.TextBoxTargetPrice.Text = Me.currentPrice + (Me.currentPrice * (num.Value / 100))
+            Me.TextBoxTargetPrice.Text = CStr(ProfitLossCalculator.CalculateTargetPrice(Me.currentPrice, CDbl(num.Value)))
             Me.CalculatePL()
         End If
     End Sub
@@ -99,7 +101,7 @@ Public Class Form1
     End Sub
 
     Private Sub UpdateNumericUpDownTargetPrice()
-        Dim change As Double = ((Me.targetPrice - Me.currentPrice) / Math.Abs(Me.currentPrice)) * 100
+        Dim change As Double = ProfitLossCalculator.CalculatePriceChangePercent(Me.currentPrice, Me.targetPrice)
         If Double.IsNaN(change) Then
             Me.NumericUpDownTargetPrice.Value = 0
         Else
@@ -112,39 +114,28 @@ Public Class Form1
 
     Private Sub CalculatePL()
 
-        If (Me.invested = 0) OrElse
-            (Me.currentPrice = 0) OrElse
-            (String.IsNullOrEmpty(Me.TextBoxTargetPrice.Text)) OrElse
-            (String.IsNullOrEmpty(Me.NumericUpDownTargetPrice.Value = 0)) Then
-
-            Me.LabelProfitValue.Text = "N/A"
-            Me.LabelProfitValue.ForeColor = Color.LightGray
-            Me.ButtonMakeScreenshot.Enabled = False
-
+        Dim result As ProfitLossResult
+        If String.IsNullOrEmpty(Me.TextBoxTargetPrice.Text) Then
+            result = ProfitLossResult.NotAvailable
         Else
-            Dim tempInvested As Double = (Me.invested * Me.NumericUpDownLeverage.Value)
-            Dim result As Double = ((Me.targetPrice / Me.currentPrice) * tempInvested) - tempInvested
-            Dim change As Double = ((Me.targetPrice - Me.currentPrice) / Math.Abs(Me.currentPrice)) * 100
-
-            Select Case result
-
-                Case > 0
-                    Me.LabelProfitValue.Text = $"{result.ToString("C", CultureInfo.GetCultureInfo("en-US"))}  (+{change:0.##}%)"
-                    Me.LabelProfitValue.ForeColor = Color.GreenYellow
-
-                Case < 0
-                    Me.LabelProfitValue.Text = $"{result.ToString("C", CultureInfo.GetCultureInfo("en-US"))}  ({change:0.##}%)"
-                    Me.LabelProfitValue.ForeColor = Color.IndianRed
-
-                Case Else ' = 0
-                    Me.LabelProfitValue.Text = 0.ToString("C0", CultureInfo.GetCultureInfo("en-US"))
-                    Me.LabelProfitValue.ForeColor = Color.LightGray
-
-            End Select
-
-            Me.ButtonMakeScreenshot.Enabled = True
-
+            result = ProfitLossCalculator.Calculate(Me.invested, Me.currentPrice, Me.targetPrice, CDbl(Me.NumericUpDownLeverage.Value))
         End If
+
+        Me.LabelProfitValue.Text = result.ToDisplayText()
+
+        Select Case result.Kind
+            Case ProfitLossKind.Profit
+                Me.LabelProfitValue.ForeColor = Color.GreenYellow
+
+            Case ProfitLossKind.Loss
+                Me.LabelProfitValue.ForeColor = Color.IndianRed
+
+            Case Else ' NotAvailable, BreakEven
+                Me.LabelProfitValue.ForeColor = Color.LightGray
+
+        End Select
+
+        Me.ButtonMakeScreenshot.Enabled = result.IsAvailable
 
     End Sub
 

@@ -1,6 +1,7 @@
 ﻿Imports System.Resources
 Imports System
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
 ' General Information about an assembly is controlled through the following
@@ -17,6 +18,9 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
+
+' Allows the unit test project to access Friend members (e.g. the controls of Form1).
+<Assembly: InternalsVisibleTo("InvestmentProfitLossCalculator.Tests")>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
 <Assembly: Guid("e2139c56-31cf-4fc3-9ba3-68fcb11e7ae9")>
