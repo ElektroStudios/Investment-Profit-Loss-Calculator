@@ -62,10 +62,22 @@ Namespace Helpers
         ''' </param>
         ''' ----------------------------------------------------------------------------------------------------
         Friend Sub New(cultureName As String)
+            Me.New(CultureInfo.GetCultureInfo(cultureName))
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Initializes a new instance of the <see cref="CultureScope"/> class.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <param name="culture">
+        ''' The culture to apply to the current thread.
+        ''' </param>
+        ''' ----------------------------------------------------------------------------------------------------
+        Friend Sub New(culture As CultureInfo)
             Me.originalCulture = Thread.CurrentThread.CurrentCulture
             Me.originalUICulture = Thread.CurrentThread.CurrentUICulture
 
-            Dim culture As CultureInfo = CultureInfo.GetCultureInfo(cultureName)
             Thread.CurrentThread.CurrentCulture = culture
             Thread.CurrentThread.CurrentUICulture = culture
         End Sub

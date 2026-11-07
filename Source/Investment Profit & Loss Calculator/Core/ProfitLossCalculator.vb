@@ -40,17 +40,40 @@ Namespace Core
 
         ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
+        ''' The format used to display prices: thousands separators, 
+        ''' at least two decimals and up to ten decimals (for low-priced assets such as some cryptocurrencies).
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        Public Const PriceDisplayFormat As String = "#,##0.00########"
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Parses a price typed by the user, using the dot as preferred decimal separator.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <inheritdoc cref="TryParsePrice(String, DisplayFormat, ByRef Double)"/>
+        Public Shared Function TryParsePrice(text As String, ByRef value As Double) As Boolean
+            Return ProfitLossCalculator.TryParsePrice(text, DisplayFormat.Default, value)
+        End Function
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
         ''' Parses a price typed by the user.
         ''' <para></para>
-        ''' Both the dot (".") and the comma (",") are accepted as decimal separator.
-        ''' Thousands separators are not supported.
+        ''' Both the dot (".") and the comma (",") are accepted as decimal separator, 
+        ''' with optional thousands separators; the decimal separator of <paramref name="format"/> 
+        ''' resolves ambiguous texts (see <see cref="NumberTextParser"/> for the rules).
         ''' Non-finite values (NaN, infinity or overflowing numbers) are rejected.
         ''' </summary>
         ''' ----------------------------------------------------------------------------------------------------
         ''' <param name="text">
         ''' The text to parse.
         ''' </param>
-        '''
+        ''' 
+        ''' <param name="format">
+        ''' The display format.
+        ''' </param>
+        ''' 
         ''' <param name="value">
         ''' When this method returns, contains the parsed price, or zero if the parsing failed.
         ''' </param>
@@ -60,30 +83,66 @@ Namespace Core
         ''' </returns>
         ''' ----------------------------------------------------------------------------------------------------
         ''' <exception cref="ArgumentNullException">
-        ''' Thrown when <paramref name="text"/> is <see langword="Nothing"/>.
+        ''' Thrown when <paramref name="text"/> or <paramref name="format"/> is <see langword="Nothing"/>.
         ''' </exception>
         ''' ----------------------------------------------------------------------------------------------------
-        Public Shared Function TryParsePrice(text As String, ByRef value As Double) As Boolean
+        Public Shared Function TryParsePrice(text As String, format As DisplayFormat, ByRef value As Double) As Boolean
+            If format Is Nothing Then
+                Throw New ArgumentNullException(NameOf(format))
+            End If
+            Return NumberTextParser.TryParseDouble(text, format.DecimalSeparatorChar, value)
+        End Function
 
-            If text Is Nothing Then
-                Throw New ArgumentNullException(NameOf(text))
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Formats a price with the default display format (e.g. 1344 is formatted as "1,344.00").
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <inheritdoc cref="FormatPrice(Double, DisplayFormat)"/>
+        Public Shared Function FormatPrice(price As Double) As String
+            Return ProfitLossCalculator.FormatPrice(price, DisplayFormat.Default)
+        End Function
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Formats a price to be displayed to the user, using <see cref="PriceDisplayFormat"/> 
+        ''' and the separators of the specified display format 
+        ''' (e.g. 1344 is formatted as "1,344.00" or "1.344,00").
+        ''' <para></para>
+        ''' The resulting text can be parsed back with <see cref="ProfitLossCalculator.TryParsePrice(String, DisplayFormat, ByRef Double)"/>
+        ''' using the same display format.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <param name="price">
+        ''' The price to format.
+        ''' </param>
+        ''' 
+        ''' <param name="format">
+        ''' The display format.
+        ''' </param>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <returns>
+        ''' The formatted price.
+        ''' </returns>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <exception cref="ArgumentNullException">
+        ''' Thrown when <paramref name="format"/> is <see langword="Nothing"/>.
+        ''' </exception>
+        ''' 
+        ''' <exception cref="ArgumentOutOfRangeException">
+        ''' Thrown when <paramref name="price"/> is not a finite value.
+        ''' </exception>
+        ''' ----------------------------------------------------------------------------------------------------
+        Public Shared Function FormatPrice(price As Double, format As DisplayFormat) As String
+
+            If format Is Nothing Then
+                Throw New ArgumentNullException(NameOf(format))
+            End If
+            If Double.IsNaN(price) OrElse Double.IsInfinity(price) Then
+                Throw New ArgumentOutOfRangeException(NameOf(price), price, "Price must be a finite value.")
             End If
 
-            If Not Double.TryParse(text.Replace(","c, "."c),
-                                   NumberStyles.Float Or NumberStyles.AllowThousands,
-                                   CultureInfo.InvariantCulture,
-                                   value) Then
-                value = 0
-                Return False
-            End If
-
-            ' Modern .NET returns infinity for overflowing values instead of failing.
-            If Double.IsNaN(value) OrElse Double.IsInfinity(value) Then
-                value = 0
-                Return False
-            End If
-
-            Return True
+            Return format.FormatNumber(price, PriceDisplayFormat)
         End Function
 
         ''' ----------------------------------------------------------------------------------------------------

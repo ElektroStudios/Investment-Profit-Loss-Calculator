@@ -34,14 +34,11 @@ Namespace Core
 
         ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
-        ''' Formats an amount as US dollars, the same way the application does.
-        ''' <para></para>
-        ''' The negative currency pattern of "en-US" depends on the runtime and OS culture data
-        ''' (e.g. "($50.00)" vs. "-$50.00"), so tests involving losses build the currency part with this method.
+        ''' Formats an amount as US dollars with the default display format of the application.
         ''' </summary>
         ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function FormatUsd(amount As Double) As String
-            Return amount.ToString("C", CultureInfo.GetCultureInfo("en-US"))
+            Return DisplayFormat.Default.FormatCurrency(amount, 2)
         End Function
 
 #End Region
@@ -139,17 +136,47 @@ Namespace Core
 
         ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
-        ''' Verifies that the currency part of a losing result is a negative US dollar amount,
-        ''' whatever negative currency pattern is used by the runtime.
+        ''' Verifies that a losing result uses a minus sign before the currency symbol 
+        ''' (the format does not depend on the runtime culture data, which may use "($50.00)").
         ''' </summary>
         ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
-        Public Sub ToDisplayText_Loss_CurrencyIsNegativeUsd()
-            Dim text As String = New ProfitLossResult(-50, -50).ToDisplayText()
-            Dim currencyPart As String = text.Substring(0, text.IndexOf("  ", StringComparison.Ordinal))
+        Public Sub ToDisplayText_Loss_UsesMinusSign()
+            Assert.AreEqual("-$50.00  (-50%)", New ProfitLossResult(-50, -50).ToDisplayText())
+            Assert.AreEqual("-$1,234.50  (-12.5%)", New ProfitLossResult(-1234.5, -12.5).ToDisplayText())
+        End Sub
 
-            Assert.IsTrue(currencyPart = "($50.00)" OrElse currencyPart = "-$50.00",
-                          $"Unexpected currency format: '{currencyPart}'")
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies the display text with every combination of currency and decimal separator.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot, 1234.5, 12.75, "$1,234.50  (+12.75%)")>
+        <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Comma, 1234.5, 12.75, "$1.234,50  (+12,75%)")>
+        <DataRow(CurrencyKind.Euro, DecimalSeparatorKind.Comma, 1234.5, 12.75, "1.234,50 €  (+12,75%)")>
+        <DataRow(CurrencyKind.Euro, DecimalSeparatorKind.Dot, 1234.5, 12.75, "1,234.50 €  (+12.75%)")>
+        <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot, -50.0, -50.0, "-$50.00  (-50%)")>
+        <DataRow(CurrencyKind.Euro, DecimalSeparatorKind.Comma, -50.0, -50.0, "-50,00 €  (-50%)")>
+        <DataRow(CurrencyKind.Euro, DecimalSeparatorKind.Comma, -1234.5, -12.5, "-1.234,50 €  (-12,5%)")>
+        Public Sub ToDisplayText_WithFormat_ReturnsExpectedText(currency As CurrencyKind, separator As DecimalSeparatorKind, amount As Double, changePercent As Double, expected As String)
+            Dim format As New DisplayFormat(currency, separator)
+            Assert.AreEqual(expected, New ProfitLossResult(amount, changePercent).ToDisplayText(format))
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies the display text of break-even and not available results with every currency.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        Public Sub ToDisplayText_WithFormat_BreakEvenAndNotAvailable()
+            Dim euro As New DisplayFormat(CurrencyKind.Euro, DecimalSeparatorKind.Comma)
+
+            Assert.AreEqual("0 €", New ProfitLossResult(0, 0).ToDisplayText(euro))
+            Assert.AreEqual("$0", New ProfitLossResult(0, 0).ToDisplayText(DisplayFormat.Default))
+            Assert.AreEqual("N/A", ProfitLossResult.NotAvailable.ToDisplayText(euro))
+            Assert.ThrowsExactly(Of ArgumentNullException)(Function() New ProfitLossResult(1, 1).ToDisplayText(Nothing))
         End Sub
 
         ''' ----------------------------------------------------------------------------------------------------

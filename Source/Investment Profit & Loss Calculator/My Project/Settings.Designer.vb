@@ -53,6 +53,30 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("UsDollar")>  _
+        Public Property Currency() As String
+            Get
+                Return CType(Me("Currency"),String)
+            End Get
+            Set
+                Me("Currency") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Dot")>  _
+        Public Property DecimalSeparator() As String
+            Get
+                Return CType(Me("DecimalSeparator"),String)
+            End Get
+            Set
+                Me("DecimalSeparator") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -3,5 +3,12 @@
   <Profiles>
     <Profile Name="(Default)" />
   </Profiles>
-  <Settings />
+  <Settings>
+    <Setting Name="Currency" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UsDollar</Value>
+    </Setting>
+    <Setting Name="DecimalSeparator" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Dot</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

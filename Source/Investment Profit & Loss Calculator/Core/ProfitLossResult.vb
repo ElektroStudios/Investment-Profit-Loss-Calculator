@@ -8,7 +8,6 @@ Option Infer Off
 
 #Region " Imports "
 
-Imports System.Globalization
 
 #End Region
 
@@ -64,13 +63,6 @@ Namespace Core
 #End Region
 
 #Region " Fields "
-
-        ''' ----------------------------------------------------------------------------------------------------
-        ''' <summary>
-        ''' The culture used to format currency amounts.
-        ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
-        Private Shared ReadOnly CurrencyCulture As CultureInfo = CultureInfo.GetCultureInfo("en-US")
 
         ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
@@ -173,10 +165,8 @@ Namespace Core
 
         ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
-        ''' Returns the text that is displayed to the user for this result.
-        ''' <para></para>
-        ''' The amount is formatted as US dollars, and the percentage change is formatted
-        ''' with up to two decimals using the invariant culture.
+        ''' Returns the text that is displayed to the user for this result, using the default display format
+        ''' (e.g. "$1,000.50  (+12.5%)").
         ''' </summary>
         ''' ----------------------------------------------------------------------------------------------------
         ''' <returns>
@@ -184,17 +174,45 @@ Namespace Core
         ''' </returns>
         ''' ----------------------------------------------------------------------------------------------------
         Public Function ToDisplayText() As String
+            Return Me.ToDisplayText(DisplayFormat.Default)
+        End Function
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Returns the text that is displayed to the user for this result, using the specified display format
+        ''' (e.g. "$1,000.50  (+12.5%)" or "1.000,50 €  (+12,5%)").
+        ''' <para></para>
+        ''' The percentage change is formatted with up to two decimals.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <param name="format">
+        ''' The display format.
+        ''' </param>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <returns>
+        ''' The text that is displayed to the user.
+        ''' </returns>
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <exception cref="ArgumentNullException">
+        ''' Thrown when <paramref name="format"/> is <see langword="Nothing"/>.
+        ''' </exception>
+        ''' ----------------------------------------------------------------------------------------------------
+        Public Function ToDisplayText(format As DisplayFormat) As String
+
+            If format Is Nothing Then
+                Throw New ArgumentNullException(NameOf(format))
+            End If
 
             Select Case Me.Kind
 
                 Case ProfitLossKind.Profit
-                    Return $"{Me.Amount.ToString("C", ProfitLossResult.CurrencyCulture)}  (+{Me.FormatPercent()}%)"
+                    Return $"{format.FormatCurrency(Me.Amount, 2)}  (+{format.FormatNumber(Me.ChangePercent, "0.##")}%)"
 
                 Case ProfitLossKind.Loss
-                    Return $"{Me.Amount.ToString("C", ProfitLossResult.CurrencyCulture)}  ({Me.FormatPercent()}%)"
+                    Return $"{format.FormatCurrency(Me.Amount, 2)}  ({format.FormatNumber(Me.ChangePercent, "0.##")}%)"
 
                 Case ProfitLossKind.BreakEven
-                    Return 0.ToString("C0", ProfitLossResult.CurrencyCulture)
+                    Return format.FormatCurrency(0, 0)
 
                 Case Else
                     Return ProfitLossResult.NotAvailableText
@@ -213,19 +231,6 @@ Namespace Core
         ''' ----------------------------------------------------------------------------------------------------
         Public Overrides Function ToString() As String
             Return Me.ToDisplayText()
-        End Function
-
-#End Region
-
-#Region " Private Methods "
-
-        ''' ----------------------------------------------------------------------------------------------------
-        ''' <summary>
-        ''' Formats the percentage change with up to two decimals.
-        ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
-        Private Function FormatPercent() As String
-            Return Me.ChangePercent.ToString("0.##", CultureInfo.InvariantCulture)
         End Function
 
 #End Region

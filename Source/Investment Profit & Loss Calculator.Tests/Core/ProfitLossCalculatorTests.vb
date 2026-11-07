@@ -56,6 +56,14 @@ Namespace Core
         <DataRow(".5", 0.5, DisplayName:="Missing integer part")>
         <DataRow("1e3", 1000.0, DisplayName:="Scientific notation")>
         <DataRow("0.00000123", 0.00000123, DisplayName:="Very small value")>
+        <DataRow("1,000", 1000.0, DisplayName:="Comma thousands separator")>
+        <DataRow("1,000.50", 1000.5, DisplayName:="Comma thousands and dot decimal separators")>
+        <DataRow("1.000,50", 1000.5, DisplayName:="Dot thousands and comma decimal separators")>
+        <DataRow("1000,50", 1000.5, DisplayName:="Comma decimal separator with two decimals")>
+        <DataRow("12,345,678.9", 12345678.9, DisplayName:="Multiple comma thousands separators")>
+        <DataRow("1.000.000", 1000000.0, DisplayName:="Multiple dot thousands separators")>
+        <DataRow("-1,234.5", -1234.5, DisplayName:="Negative value with thousands separator")>
+        <DataRow("1,344.00", 1344.0, DisplayName:="Display format")>
         Public Sub TryParsePrice_ValidText_ReturnsTrueAndValue(text As String, expected As Double)
             Dim value As Double
             Dim success As Boolean = ProfitLossCalculator.TryParsePrice(text, value)
@@ -75,7 +83,11 @@ Namespace Core
         <DataRow("abc", DisplayName:="Letters")>
         <DataRow("12abc", DisplayName:="Trailing letters")>
         <DataRow("$100", DisplayName:="Currency symbol")>
-        <DataRow("1,000.50", DisplayName:="Thousands separator and decimal separator")>
+        <DataRow("1,2,3", DisplayName:="Multiple commas that are not thousands groups")>
+        <DataRow("1,000,50", DisplayName:="Invalid comma thousands group")>
+        <DataRow("1,00.5", DisplayName:="Invalid thousands group before decimal separator")>
+        <DataRow("1.5,000", DisplayName:="Invalid dot thousands group before decimal separator")>
+        <DataRow("1,000.000,5", DisplayName:="Mixed separators in thousands groups")>
         <DataRow("1.2.3", DisplayName:="Multiple decimal separators")>
         <DataRow("NaN", DisplayName:="NaN")>
         <DataRow("Infinity", DisplayName:="Infinity")>
@@ -122,6 +134,141 @@ Namespace Core
             Dim value As Double
             Assert.ThrowsExactly(Of ArgumentNullException)(
                 Sub() ProfitLossCalculator.TryParsePrice(Nothing, value))
+        End Sub
+
+#End Region
+
+#Region " FormatPrice "
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies the display format of prices.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow(1344.0, "1,344.00", DisplayName:="Thousands separator and two decimals")>
+        <DataRow(0.0, "0.00", DisplayName:="Zero")>
+        <DataRow(12.0, "12.00", DisplayName:="Integer")>
+        <DataRow(42000.5, "42,000.50", DisplayName:="One decimal")>
+        <DataRow(1234567.891, "1,234,567.891", DisplayName:="Three decimals")>
+        <DataRow(0.00001234, "0.00001234", DisplayName:="Low-priced asset")>
+        <DataRow(-5.0, "-5.00", DisplayName:="Negative value")>
+        Public Sub FormatPrice_ReturnsExpectedText(price As Double, expected As String)
+            Assert.AreEqual(expected, ProfitLossCalculator.FormatPrice(price))
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies that formatted prices can be parsed back to the same value.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow(1344.0)>
+        <DataRow(0.5)>
+        <DataRow(42000.12345)>
+        <DataRow(987654321.25)>
+        <DataRow(0.00012345)>
+        Public Sub FormatPrice_RoundTripsWithTryParsePrice(price As Double)
+            Dim parsed As Double
+            Assert.IsTrue(ProfitLossCalculator.TryParsePrice(ProfitLossCalculator.FormatPrice(price), parsed))
+            Assert.AreEqual(price, parsed, Math.Abs(price) * 0.000000001)
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies that the display format does not depend on the culture of the current thread.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow("de-DE")>
+        <DataRow("es-ES")>
+        <DataRow("fr-FR")>
+        Public Sub FormatPrice_IsCultureIndependent(cultureName As String)
+            Using scope As New CultureScope(cultureName)
+                Assert.AreEqual("1,234.50", ProfitLossCalculator.FormatPrice(1234.5))
+            End Using
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies that non-finite prices throw <see cref="ArgumentOutOfRangeException"/>.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow(Double.NaN)>
+        <DataRow(Double.PositiveInfinity)>
+        <DataRow(Double.NegativeInfinity)>
+        Public Sub FormatPrice_NonFinite_Throws(price As Double)
+            Assert.ThrowsExactly(Of ArgumentOutOfRangeException)(Function() ProfitLossCalculator.FormatPrice(price))
+        End Sub
+
+#End Region
+
+#Region " Display Format "
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies the price format with both decimal separators.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow(DecimalSeparatorKind.Dot, 1344.0, "1,344.00")>
+        <DataRow(DecimalSeparatorKind.Comma, 1344.0, "1.344,00")>
+        <DataRow(DecimalSeparatorKind.Comma, 0.00001234, "0,00001234")>
+        <DataRow(DecimalSeparatorKind.Comma, 1234567.891, "1.234.567,891")>
+        Public Sub FormatPrice_WithFormat_UsesSeparators(separator As DecimalSeparatorKind, price As Double, expected As String)
+            Dim format As New DisplayFormat(CurrencyKind.Euro, separator)
+            Assert.AreEqual(expected, ProfitLossCalculator.FormatPrice(price, format))
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies that ambiguous prices are parsed with the decimal separator of the display format.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow(DecimalSeparatorKind.Dot, "1,500", 1500.0)>
+        <DataRow(DecimalSeparatorKind.Dot, "1.500", 1.5)>
+        <DataRow(DecimalSeparatorKind.Comma, "1,500", 1.5)>
+        <DataRow(DecimalSeparatorKind.Comma, "1.500", 1500.0)>
+        <DataRow(DecimalSeparatorKind.Comma, "1.344,00", 1344.0)>
+        <DataRow(DecimalSeparatorKind.Comma, "1,344.00", 1344.0)>
+        Public Sub TryParsePrice_WithFormat_ResolvesAmbiguity(separator As DecimalSeparatorKind, text As String, expected As Double)
+            Dim format As New DisplayFormat(CurrencyKind.UsDollar, separator)
+            Dim value As Double
+            Assert.IsTrue(ProfitLossCalculator.TryParsePrice(text, format, value))
+            Assert.AreEqual(expected, value, Tolerance)
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies that formatted prices are parsed back to the same value with every display format.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot)>
+        <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Comma)>
+        <DataRow(CurrencyKind.Euro, DecimalSeparatorKind.Dot)>
+        <DataRow(CurrencyKind.Euro, DecimalSeparatorKind.Comma)>
+        Public Sub FormatPrice_WithFormat_RoundTrips(currency As CurrencyKind, separator As DecimalSeparatorKind)
+            Dim format As New DisplayFormat(currency, separator)
+            For Each price As Double In New Double() {0, 0.5, 1.5, 1344, 1500, 42000.12345, 987654321.25, 0.00012345}
+                Dim parsed As Double
+                Assert.IsTrue(ProfitLossCalculator.TryParsePrice(ProfitLossCalculator.FormatPrice(price, format), format, parsed), price.ToString())
+                Assert.AreEqual(price, parsed, Math.Max(Tolerance, Math.Abs(price) * 0.000000001), price.ToString())
+            Next
+        End Sub
+
+        ''' ----------------------------------------------------------------------------------------------------
+        ''' <summary>
+        ''' Verifies that a null display format throws <see cref="ArgumentNullException"/>.
+        ''' </summary>
+        ''' ----------------------------------------------------------------------------------------------------
+        <TestMethod>
+        Public Sub NullDisplayFormat_Throws()
+            Dim value As Double
+            Assert.ThrowsExactly(Of ArgumentNullException)(Function() ProfitLossCalculator.TryParsePrice("1", Nothing, value))
+            Assert.ThrowsExactly(Of ArgumentNullException)(Function() ProfitLossCalculator.FormatPrice(1, Nothing))
         End Sub
 
 #End Region
