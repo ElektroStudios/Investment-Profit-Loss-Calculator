@@ -75,8 +75,6 @@ When trading or investing in volatile assets like cryptocurrencies or stocks, ma
 
 ![](Images/BTC1.png)  ![](Images/BTC2.png)
 
-![](Images/Investment-Profit-Calculator.png)
-
 ## 📝 Requirements
 
 - Microsoft Windows OS.
