@@ -17,24 +17,20 @@ Imports System.Windows.Forms
 
 #Region " ThemedNumericUpDown "
 
-''' ----------------------------------------------------------------------------------------------------
 ''' <summary>
 ''' A <see cref="NumericUpDown"/> whose up/down buttons are drawn flat with customizable colors,
 ''' instead of the native light-themed buttons, so it fits in dark themes.
 ''' <para></para>
 ''' It also accepts both the dot and the comma as decimal separator (see <see cref="ValidateEditText"/>).
 ''' </summary>
-''' ----------------------------------------------------------------------------------------------------
 <DesignerCategory("Code")>
 Public Class ThemedNumericUpDown : Inherits NumericUpDown
 
 #Region " Enumerations "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Specifies a part of the up/down buttons.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Enum ButtonPart As Integer
 
         ''' <summary>
@@ -58,72 +54,54 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
 
 #Region " Fields "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The internal control that draws the up/down buttons.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private ReadOnly buttonsControl As Control
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The button part under the mouse pointer the last time it was checked.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private lastHoveredPart As ButtonPart
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Indicates whether <see cref="ThemedNumericUpDown.ValidateEditText"/> is replacing the typed text 
     ''' with its normalized form (used to handle the re-entrant validation of the Text setter).
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private isNormalizingText As Boolean
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The value of the <see cref="ThemedNumericUpDown.ButtonBackColor"/> property.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private buttonBackColorField As Color = SystemColors.Control
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The value of the <see cref="ThemedNumericUpDown.ButtonHoverBackColor"/> property.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private buttonHoverBackColorField As Color = SystemColors.ControlLight
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The value of the <see cref="ThemedNumericUpDown.ButtonPressedBackColor"/> property.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private buttonPressedBackColorField As Color = SystemColors.ControlDark
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The value of the <see cref="ThemedNumericUpDown.ArrowColor"/> property.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private arrowColorField As Color = SystemColors.ControlText
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The value of the <see cref="ThemedNumericUpDown.DisabledArrowColor"/> property.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private disabledArrowColorField As Color = SystemColors.GrayText
 
 #End Region
 
 #Region " Properties "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the background color of the up/down buttons.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The background color of the up/down buttons.")>
     Public Property ButtonBackColor As Color
@@ -136,11 +114,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         End Set
     End Property
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the background color of the up/down buttons when the mouse is over them.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The background color of the up/down buttons when the mouse is over them.")>
     Public Property ButtonHoverBackColor As Color
@@ -153,11 +129,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         End Set
     End Property
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the background color of the up/down buttons when they are pressed.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The background color of the up/down buttons when they are pressed.")>
     Public Property ButtonPressedBackColor As Color
@@ -170,11 +144,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         End Set
     End Property
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the color of the arrows of the up/down buttons.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The color of the arrows of the up/down buttons.")>
     Public Property ArrowColor As Color
@@ -187,11 +159,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         End Set
     End Property
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the color of the arrows of the up/down buttons when the control is disabled.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The color of the arrows of the up/down buttons when the control is disabled.")>
     Public Property DisabledArrowColor As Color
@@ -208,15 +178,12 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
 
 #Region " Constructors "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Initializes a new instance of the <see cref="ThemedNumericUpDown"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <exception cref="InvalidOperationException">
     ''' Thrown when the internal up/down buttons control cannot be found.
     ''' </exception>
-    ''' ----------------------------------------------------------------------------------------------------
     Public Sub New()
         MyBase.New()
 
@@ -233,7 +200,6 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
 
 #Region " Public Methods "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets the value that is currently displayed, without validating the text that is being typed.
     ''' <para></para>
@@ -242,16 +208,13 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
     ''' This method parses the typed text instead (see <see cref="Core.NumberTextParser"/>), 
     ''' constrained to <see cref="NumericUpDown.Minimum"/> and <see cref="NumericUpDown.Maximum"/>.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="value">
     ''' When this method returns, contains the current value, or zero if the typed text is not a valid number.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <returns>
     ''' <see langword="True"/> if the current value is valid; 
     ''' <see langword="False"/> if the user is typing a text that is not a valid number (including an empty text).
     ''' </returns>
-    ''' ----------------------------------------------------------------------------------------------------
     Public Function TryGetEditValue(ByRef value As Decimal) As Boolean
 
         If Not Me.UserEdit Then
@@ -269,14 +232,12 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         Return True
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Reformats the displayed text using the current culture of the thread.
     ''' <para></para>
     ''' Call this method after changing the culture of the thread, 
     ''' as the control does not reformat its text by itself.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Public Sub RefreshText()
         Me.UpdateEditText()
     End Sub
@@ -285,7 +246,6 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
 
 #Region " Overridden Methods "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Validates and parses the text typed by the user.
     ''' <para></para>
@@ -296,7 +256,6 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
     ''' <para></para>
     ''' If the text cannot be parsed, the base behavior applies (the previous value is restored).
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Protected Overrides Sub ValidateEditText()
 
         ' The Text setter of UpDownBase calls ValidateEditText again while UserEdit is True, 
@@ -327,21 +286,17 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Raises the <see cref="Control.EnabledChanged"/> event.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Protected Overrides Sub OnEnabledChanged(e As EventArgs)
         MyBase.OnEnabledChanged(e)
         Me.buttonsControl.Invalidate()
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Releases the unmanaged resources used by the control, and optionally releases the managed resources.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Protected Overrides Sub Dispose(disposing As Boolean)
         If disposing Then
             RemoveHandler Me.buttonsControl.Paint, AddressOf Me.ButtonsControl_Paint
@@ -357,12 +312,10 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
 
 #Region " Event Handlers "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Handles the <see cref="Control.Paint"/> event of the up/down buttons control,
     ''' painting flat buttons over the native ones.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub ButtonsControl_Paint(sender As Object, e As PaintEventArgs)
 
         Dim size As Size = Me.buttonsControl.ClientSize
@@ -376,11 +329,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         Me.PaintButton(e.Graphics, downBounds, isUp:=False, isHovered:=hoveredPart = ButtonPart.Down, isPressed:=isPressed)
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Handles the <see cref="Control.MouseMove"/> event of the up/down buttons control.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub ButtonsControl_MouseMove(sender As Object, e As MouseEventArgs)
         Dim hoveredPart As ButtonPart = Me.GetHoveredPart()
         If hoveredPart <> Me.lastHoveredPart Then
@@ -389,11 +340,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Handles the mouse events of the up/down buttons control that change the visual state of the buttons.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub ButtonsControl_MouseStateChanged(sender As Object, e As EventArgs)
         Me.lastHoveredPart = Me.GetHoveredPart()
         Me.buttonsControl.Invalidate()
@@ -403,26 +352,21 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
 
 #Region " Private Methods "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets the decimal separator of the current culture, used to resolve ambiguous typed texts 
     ''' (e.g. "1,500" is 1.5 when the decimal separator is the comma, and 1500 otherwise).
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Shared Function GetPreferredDecimalSeparator() As Char
         Dim separator As String = Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator
         Return If(separator = ",", ","c, "."c)
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Finds the internal control that draws the up/down buttons of a <see cref="NumericUpDown"/>.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <exception cref="InvalidOperationException">
     ''' Thrown when the control cannot be found.
     ''' </exception>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Shared Function FindButtonsControl(numericUpDown As NumericUpDown) As Control
 
         ' UpDownBase hosts two child controls: the edit box (derived from TextBox) and the buttons.
@@ -435,11 +379,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         Throw New InvalidOperationException("The up/down buttons control of the NumericUpDown was not found.")
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets the button part that is currently under the mouse pointer.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Function GetHoveredPart() As ButtonPart
 
         If Not Me.Enabled OrElse Not Me.buttonsControl.IsHandleCreated Then
@@ -456,11 +398,9 @@ Public Class ThemedNumericUpDown : Inherits NumericUpDown
         Return If(location.Y < size.Height \ 2, ButtonPart.Up, ButtonPart.Down)
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Paints a flat up or down button.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub PaintButton(g As Graphics, bounds As Rectangle, isUp As Boolean, isHovered As Boolean, isPressed As Boolean)
 
         If bounds.Width <= 0 OrElse bounds.Height <= 0 Then

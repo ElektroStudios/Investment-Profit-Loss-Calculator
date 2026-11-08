@@ -74,23 +74,34 @@ Partial Class Form1
         '
         'FrameInvestedMoney
         '
+        Me.FrameInvestedMoney.BorderColor = System.Drawing.SystemColors.ControlDark
         Me.FrameInvestedMoney.Controls.Add(Me.NumericUpDownInvestedMoney)
+        Me.FrameInvestedMoney.DisabledBorderColor = System.Drawing.SystemColors.ControlLight
+        Me.FrameInvestedMoney.ErrorBorderColor = System.Drawing.Color.Firebrick
+        Me.FrameInvestedMoney.FocusedBorderColor = System.Drawing.SystemColors.Highlight
         Me.FrameInvestedMoney.Location = New System.Drawing.Point(20, 42)
         Me.FrameInvestedMoney.Name = "FrameInvestedMoney"
+        Me.FrameInvestedMoney.Padding = New System.Windows.Forms.Padding(10, 0, 4, 0)
         Me.FrameInvestedMoney.Size = New System.Drawing.Size(200, 42)
         Me.FrameInvestedMoney.TabIndex = 1
         '
         'NumericUpDownInvestedMoney
         '
+        Me.NumericUpDownInvestedMoney.ArrowColor = System.Drawing.SystemColors.ControlText
         Me.NumericUpDownInvestedMoney.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.NumericUpDownInvestedMoney.ButtonBackColor = System.Drawing.SystemColors.Control
+        Me.NumericUpDownInvestedMoney.ButtonHoverBackColor = System.Drawing.SystemColors.ControlLight
+        Me.NumericUpDownInvestedMoney.ButtonPressedBackColor = System.Drawing.SystemColors.ControlDark
         Me.NumericUpDownInvestedMoney.DecimalPlaces = 2
+        Me.NumericUpDownInvestedMoney.DisabledArrowColor = System.Drawing.SystemColors.GrayText
         Me.NumericUpDownInvestedMoney.Font = New System.Drawing.Font("Segoe UI", 15.75!)
-        Me.NumericUpDownInvestedMoney.Location = New System.Drawing.Point(10, 6)
+        Me.NumericUpDownInvestedMoney.Location = New System.Drawing.Point(10, 5)
         Me.NumericUpDownInvestedMoney.Maximum = New Decimal(New Integer() {-727379969, 232, 0, 0})
         Me.NumericUpDownInvestedMoney.Name = "NumericUpDownInvestedMoney"
-        Me.NumericUpDownInvestedMoney.Size = New System.Drawing.Size(186, 32)
+        Me.NumericUpDownInvestedMoney.Size = New System.Drawing.Size(186, 31)
         Me.NumericUpDownInvestedMoney.TabIndex = 0
         Me.NumericUpDownInvestedMoney.ThousandsSeparator = True
+        Me.NumericUpDownInvestedMoney.Value = New Decimal(New Integer() {4, 0, 0, 0})
         '
         'LabelLeverage
         '
@@ -104,21 +115,31 @@ Partial Class Form1
         '
         'FrameLeverage
         '
+        Me.FrameLeverage.BorderColor = System.Drawing.SystemColors.ControlDark
         Me.FrameLeverage.Controls.Add(Me.NumericUpDownLeverage)
+        Me.FrameLeverage.DisabledBorderColor = System.Drawing.SystemColors.ControlLight
+        Me.FrameLeverage.ErrorBorderColor = System.Drawing.Color.Firebrick
+        Me.FrameLeverage.FocusedBorderColor = System.Drawing.SystemColors.Highlight
         Me.FrameLeverage.Location = New System.Drawing.Point(236, 42)
         Me.FrameLeverage.Name = "FrameLeverage"
+        Me.FrameLeverage.Padding = New System.Windows.Forms.Padding(10, 0, 4, 0)
         Me.FrameLeverage.Size = New System.Drawing.Size(124, 42)
         Me.FrameLeverage.TabIndex = 3
         '
         'NumericUpDownLeverage
         '
+        Me.NumericUpDownLeverage.ArrowColor = System.Drawing.SystemColors.ControlText
         Me.NumericUpDownLeverage.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.NumericUpDownLeverage.ButtonBackColor = System.Drawing.SystemColors.Control
+        Me.NumericUpDownLeverage.ButtonHoverBackColor = System.Drawing.SystemColors.ControlLight
+        Me.NumericUpDownLeverage.ButtonPressedBackColor = System.Drawing.SystemColors.ControlDark
+        Me.NumericUpDownLeverage.DisabledArrowColor = System.Drawing.SystemColors.GrayText
         Me.NumericUpDownLeverage.Font = New System.Drawing.Font("Segoe UI", 15.75!)
-        Me.NumericUpDownLeverage.Location = New System.Drawing.Point(10, 6)
+        Me.NumericUpDownLeverage.Location = New System.Drawing.Point(10, 5)
         Me.NumericUpDownLeverage.Maximum = New Decimal(New Integer() {5000, 0, 0, 0})
         Me.NumericUpDownLeverage.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumericUpDownLeverage.Name = "NumericUpDownLeverage"
-        Me.NumericUpDownLeverage.Size = New System.Drawing.Size(110, 32)
+        Me.NumericUpDownLeverage.Size = New System.Drawing.Size(110, 31)
         Me.NumericUpDownLeverage.TabIndex = 0
         Me.NumericUpDownLeverage.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
@@ -134,9 +155,14 @@ Partial Class Form1
         '
         'FrameCurrentPrice
         '
+        Me.FrameCurrentPrice.BorderColor = System.Drawing.SystemColors.ControlDark
         Me.FrameCurrentPrice.Controls.Add(Me.TextBoxCurrentPrice)
+        Me.FrameCurrentPrice.DisabledBorderColor = System.Drawing.SystemColors.ControlLight
+        Me.FrameCurrentPrice.ErrorBorderColor = System.Drawing.Color.Firebrick
+        Me.FrameCurrentPrice.FocusedBorderColor = System.Drawing.SystemColors.Highlight
         Me.FrameCurrentPrice.Location = New System.Drawing.Point(20, 126)
         Me.FrameCurrentPrice.Name = "FrameCurrentPrice"
+        Me.FrameCurrentPrice.Padding = New System.Windows.Forms.Padding(10, 0, 4, 0)
         Me.FrameCurrentPrice.Size = New System.Drawing.Size(340, 42)
         Me.FrameCurrentPrice.TabIndex = 5
         '
@@ -145,6 +171,7 @@ Partial Class Form1
         Me.TextBoxCurrentPrice.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TextBoxCurrentPrice.Font = New System.Drawing.Font("Segoe UI", 15.75!)
         Me.TextBoxCurrentPrice.Hint = "0.00"
+        Me.TextBoxCurrentPrice.HintForeColor = System.Drawing.SystemColors.GrayText
         Me.TextBoxCurrentPrice.Location = New System.Drawing.Point(10, 7)
         Me.TextBoxCurrentPrice.Name = "TextBoxCurrentPrice"
         Me.TextBoxCurrentPrice.Size = New System.Drawing.Size(326, 28)
@@ -192,9 +219,14 @@ Partial Class Form1
         '
         'FrameTargetPrice
         '
+        Me.FrameTargetPrice.BorderColor = System.Drawing.SystemColors.ControlDark
         Me.FrameTargetPrice.Controls.Add(Me.TextBoxTargetPrice)
+        Me.FrameTargetPrice.DisabledBorderColor = System.Drawing.SystemColors.ControlLight
+        Me.FrameTargetPrice.ErrorBorderColor = System.Drawing.Color.Firebrick
+        Me.FrameTargetPrice.FocusedBorderColor = System.Drawing.SystemColors.Highlight
         Me.FrameTargetPrice.Location = New System.Drawing.Point(20, 214)
         Me.FrameTargetPrice.Name = "FrameTargetPrice"
+        Me.FrameTargetPrice.Padding = New System.Windows.Forms.Padding(10, 0, 4, 0)
         Me.FrameTargetPrice.Size = New System.Drawing.Size(200, 42)
         Me.FrameTargetPrice.TabIndex = 9
         '
@@ -203,6 +235,7 @@ Partial Class Form1
         Me.TextBoxTargetPrice.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TextBoxTargetPrice.Font = New System.Drawing.Font("Segoe UI", 15.75!)
         Me.TextBoxTargetPrice.Hint = "0.00"
+        Me.TextBoxTargetPrice.HintForeColor = System.Drawing.SystemColors.GrayText
         Me.TextBoxTargetPrice.Location = New System.Drawing.Point(10, 7)
         Me.TextBoxTargetPrice.Name = "TextBoxTargetPrice"
         Me.TextBoxTargetPrice.Size = New System.Drawing.Size(186, 28)
@@ -210,27 +243,39 @@ Partial Class Form1
         '
         'FrameTargetPercent
         '
+        Me.FrameTargetPercent.BorderColor = System.Drawing.SystemColors.ControlDark
         Me.FrameTargetPercent.Controls.Add(Me.NumericUpDownTargetPrice)
+        Me.FrameTargetPercent.DisabledBorderColor = System.Drawing.SystemColors.ControlLight
+        Me.FrameTargetPercent.ErrorBorderColor = System.Drawing.Color.Firebrick
+        Me.FrameTargetPercent.FocusedBorderColor = System.Drawing.SystemColors.Highlight
         Me.FrameTargetPercent.Location = New System.Drawing.Point(236, 214)
         Me.FrameTargetPercent.Name = "FrameTargetPercent"
+        Me.FrameTargetPercent.Padding = New System.Windows.Forms.Padding(10, 0, 4, 0)
         Me.FrameTargetPercent.Size = New System.Drawing.Size(124, 42)
         Me.FrameTargetPercent.TabIndex = 10
         '
         'NumericUpDownTargetPrice
         '
+        Me.NumericUpDownTargetPrice.ArrowColor = System.Drawing.SystemColors.ControlText
         Me.NumericUpDownTargetPrice.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.NumericUpDownTargetPrice.ButtonBackColor = System.Drawing.SystemColors.Control
+        Me.NumericUpDownTargetPrice.ButtonHoverBackColor = System.Drawing.SystemColors.ControlLight
+        Me.NumericUpDownTargetPrice.ButtonPressedBackColor = System.Drawing.SystemColors.ControlDark
         Me.NumericUpDownTargetPrice.DecimalPlaces = 2
+        Me.NumericUpDownTargetPrice.DisabledArrowColor = System.Drawing.SystemColors.GrayText
         Me.NumericUpDownTargetPrice.Enabled = False
         Me.NumericUpDownTargetPrice.Font = New System.Drawing.Font("Segoe UI", 15.75!)
-        Me.NumericUpDownTargetPrice.Location = New System.Drawing.Point(10, 6)
+        Me.NumericUpDownTargetPrice.Location = New System.Drawing.Point(10, 5)
         Me.NumericUpDownTargetPrice.Maximum = New Decimal(New Integer() {-727379969, 232, 0, 0})
         Me.NumericUpDownTargetPrice.Minimum = New Decimal(New Integer() {100, 0, 0, -2147483648})
         Me.NumericUpDownTargetPrice.Name = "NumericUpDownTargetPrice"
-        Me.NumericUpDownTargetPrice.Size = New System.Drawing.Size(110, 32)
+        Me.NumericUpDownTargetPrice.Size = New System.Drawing.Size(110, 31)
         Me.NumericUpDownTargetPrice.TabIndex = 0
+        Me.NumericUpDownTargetPrice.Value = New Decimal(New Integer() {4, 0, 0, 0})
         '
         'PanelResult
         '
+        Me.PanelResult.BorderColor = System.Drawing.SystemColors.ControlDark
         Me.PanelResult.Controls.Add(Me.LabelProfitCaption)
         Me.PanelResult.Controls.Add(Me.LabelProfitValue)
         Me.PanelResult.Location = New System.Drawing.Point(20, 274)
@@ -290,7 +335,7 @@ Partial Class Form1
         Me.CheckBoxAlwaysOnTop.Font = New System.Drawing.Font("Segoe UI", 12.0!)
         Me.CheckBoxAlwaysOnTop.Location = New System.Drawing.Point(20, 454)
         Me.CheckBoxAlwaysOnTop.Name = "CheckBoxAlwaysOnTop"
-        Me.CheckBoxAlwaysOnTop.Size = New System.Drawing.Size(125, 25)
+        Me.CheckBoxAlwaysOnTop.Size = New System.Drawing.Size(124, 25)
         Me.CheckBoxAlwaysOnTop.TabIndex = 14
         Me.CheckBoxAlwaysOnTop.Text = "Always on top"
         Me.CheckBoxAlwaysOnTop.UseVisualStyleBackColor = False

@@ -22,21 +22,17 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 
 Namespace Core
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Unit tests for the <see cref="ProfitLossResult"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <TestClass>
     Public NotInheritable Class ProfitLossResultTests
 
 #Region " Private Methods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Formats an amount as US dollars with the default display format of the application.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function FormatUsd(amount As Double) As String
             Return DisplayFormat.Default.FormatCurrency(amount, 2)
         End Function
@@ -45,11 +41,9 @@ Namespace Core
 
 #Region " NotAvailable "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the state of <see cref="ProfitLossResult.NotAvailable"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub NotAvailable_HasExpectedState()
             Dim result As ProfitLossResult = ProfitLossResult.NotAvailable
@@ -62,11 +56,9 @@ Namespace Core
             Assert.AreEqual(ProfitLossResult.NotAvailableText, result.ToDisplayText())
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the calculator returns the shared <see cref="ProfitLossResult.NotAvailable"/> instance.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub NotAvailable_IsSharedInstance()
             Dim first As ProfitLossResult = ProfitLossCalculator.Calculate(0, 100, 150, 1)
@@ -80,11 +72,9 @@ Namespace Core
 
 #Region " Kind "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the kind is determined by the sign of the amount.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(0.01, ProfitLossKind.Profit)>
         <DataRow(1000000.0, ProfitLossKind.Profit)>
@@ -103,11 +93,9 @@ Namespace Core
 
 #Region " ToDisplayText "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the display text of profitable results.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(50.0, 50.0, "$50.00  (+50%)")>
         <DataRow(1234.5, 12.5, "$1,234.50  (+12.5%)")>
@@ -119,11 +107,9 @@ Namespace Core
             Assert.AreEqual(expected, result.ToDisplayText())
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the display text of losing results.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(-50.0, -50.0, "  (-50%)")>
         <DataRow(-1234.5, -12.5, "  (-12.5%)")>
@@ -134,23 +120,19 @@ Namespace Core
             Assert.AreEqual($"{FormatUsd(amount)}{expectedSuffix}", result.ToDisplayText())
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a losing result uses a minus sign before the currency symbol 
         ''' (the format does not depend on the runtime culture data, which may use "($50.00)").
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ToDisplayText_Loss_UsesMinusSign()
             Assert.AreEqual("-$50.00  (-50%)", New ProfitLossResult(-50, -50).ToDisplayText())
             Assert.AreEqual("-$1,234.50  (-12.5%)", New ProfitLossResult(-1234.5, -12.5).ToDisplayText())
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the display text with every combination of currency and decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot, 1234.5, 12.75, "$1,234.50  (+12.75%)")>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Comma, 1234.5, 12.75, "$1.234,50  (+12,75%)")>
@@ -164,11 +146,9 @@ Namespace Core
             Assert.AreEqual(expected, New ProfitLossResult(amount, changePercent).ToDisplayText(format))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the display text of break-even and not available results with every currency.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ToDisplayText_WithFormat_BreakEvenAndNotAvailable()
             Dim euro As New DisplayFormat(CurrencyKind.Euro, DecimalSeparatorKind.Comma)
@@ -179,22 +159,18 @@ Namespace Core
             Assert.ThrowsExactly(Of ArgumentNullException)(Function() New ProfitLossResult(1, 1).ToDisplayText(Nothing))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a losing result does not get the "+" sign that profitable results get.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ToDisplayText_Loss_DoesNotContainPlusSign()
             Dim text As String = New ProfitLossResult(-50, -50).ToDisplayText()
             Assert.DoesNotContain("+", text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the display text of break-even results, which never includes the percentage.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(0.0)>
         <DataRow(15.0)>
@@ -204,11 +180,9 @@ Namespace Core
             Assert.AreEqual("$0", result.ToDisplayText())
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the display text does not depend on the culture of the current thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("de-DE")>
         <DataRow("es-ES")>
@@ -238,11 +212,9 @@ Namespace Core
 
 #Region " ToString "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that <see cref="ProfitLossResult.ToString"/> returns the display text.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ToString_ReturnsDisplayText()
             Dim profit As New ProfitLossResult(10, 5)

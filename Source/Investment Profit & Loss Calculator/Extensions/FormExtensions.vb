@@ -15,11 +15,9 @@ Imports System.Runtime.CompilerServices
 
 Public Module FormExtensions
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Retrieves the next control of the specified type forward or back in the tab order of child controls.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <typeparam name="T">
     ''' The type of the <see cref="System.Windows.Forms.Control"/> to search.
     ''' </typeparam>
@@ -45,11 +43,9 @@ Public Module FormExtensions
     ''' <param name="controlCollection">
     ''' The <see cref="System.Windows.Forms.Form.ControlCollection"/> to search within.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <returns>
     ''' The next <see cref="System.Windows.Forms.Control"/> in the tab order.
     ''' </returns>
-    ''' ----------------------------------------------------------------------------------------------------
     <DebuggerStepThrough>
     <Extension>
     <EditorBrowsable(EditorBrowsableState.Always)>

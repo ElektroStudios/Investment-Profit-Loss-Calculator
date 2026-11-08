@@ -19,36 +19,29 @@ Public Class Form1
 
 #Region " Theming "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The palette of the theme currently applied to the window, which follows the Windows app mode (dark/light).
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private currentPaletteField As ThemePalette = ThemePalette.FromDarkMode(WindowsTheme.IsAppDarkModeEnabled())
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets the palette of the theme currently applied to the window.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend ReadOnly Property CurrentPalette As ThemePalette
         Get
             Return Me.currentPaletteField
         End Get
     End Property
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Initializes a new instance of the <see cref="Form1"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Public Sub New()
         Me.InitializeComponent()
         Me.ApplyTheme(Me.currentPaletteField)
         Me.ApplyDisplayFormat(Form1.LoadDisplayFormatFromSettings(), persist:=False)
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Raises the <see cref="Control.HandleCreated"/> event.
     ''' <para></para>
@@ -56,7 +49,6 @@ Public Class Form1
     ''' because the DWM attribute only takes effect when it is set before the window is shown.
     ''' This method also runs again if the window handle is recreated.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
         MyBase.OnHandleCreated(e)
 
@@ -65,7 +57,6 @@ Public Class Form1
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Processes Windows messages.
     ''' <para></para>
@@ -73,7 +64,6 @@ Public Class Form1
     ''' WM_SETTINGCHANGE with the "ImmersiveColorSet" parameter to all top-level windows, 
     ''' and the theme of the window is updated immediately.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Protected Overrides Sub WndProc(ByRef m As Message)
         MyBase.WndProc(m)
 
@@ -82,15 +72,12 @@ Public Class Form1
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Applies the dark or light theme to the window and its title bar, if it is not already applied.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="isDarkMode">
     ''' <see langword="True"/> to apply the dark theme; <see langword="False"/> to apply the light theme.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Sub ApplyThemeMode(isDarkMode As Boolean)
 
         If isDarkMode = Me.currentPaletteField.IsDark Then
@@ -106,15 +93,12 @@ Public Class Form1
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Applies the colors of the specified palette to the window and its controls.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="palette">
     ''' The palette to apply.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub ApplyTheme(palette As ThemePalette)
 
         If palette Is Nothing Then
@@ -174,11 +158,9 @@ Public Class Form1
         Me.ResumeLayout()
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Applies the colors of the specified palette to a flat button.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Shared Sub ApplyFlatButtonColors(button As ButtonBase, palette As ThemePalette)
         button.UseVisualStyleBackColor = False
         button.FlatStyle = FlatStyle.Flat
@@ -190,11 +172,9 @@ Public Class Form1
         button.FlatAppearance.MouseDownBackColor = palette.ButtonPressedBackColor
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Updates the colors of the "Price" / "Percent" segmented buttons, highlighting the selected one.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub UpdateTargetModeButtonColors()
         Dim palette As ThemePalette = Me.currentPaletteField
 
@@ -214,11 +194,9 @@ Public Class Form1
         Next
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Updates the border color of the "Always on top" check box, highlighting it when checked.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub UpdateAlwaysOnTopCheckBoxColors()
         Me.CheckBoxAlwaysOnTop.FlatAppearance.BorderColor =
             If(Me.CheckBoxAlwaysOnTop.Checked, Me.currentPaletteField.FocusBorderColor, Me.currentPaletteField.InputBorderColor)
@@ -228,40 +206,32 @@ Public Class Form1
 
 #Region " Display Format "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The URL of the source code repository of the application.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Const RepositoryUrl As String = "https://github.com/ElektroStudios/Investment-Profit-Loss-Calculator"
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The display format (currency and decimal separator) currently applied to the window.
     ''' <para></para>
     ''' It is initialized with the default format, because <see cref="Form1.InitializeComponent"/> already raises
     ''' events that format values; the saved format is applied right after it, in the constructor.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private displayFormatField As DisplayFormat = DisplayFormat.Default
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets the display format (currency and decimal separator) currently applied to the window.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend ReadOnly Property CurrentDisplayFormat As DisplayFormat
         Get
             Return Me.displayFormatField
         End Get
     End Property
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Applies the specified display format (currency and decimal separator) to the window:
     ''' the displayed prices, amounts and numeric controls are reformatted, keeping their values.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="format">
     ''' The display format to apply.
     ''' </param>
@@ -269,11 +239,9 @@ Public Class Form1
     ''' <param name="persist">
     ''' <see langword="True"/> to save the format in the user settings, so it is restored the next time.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <exception cref="ArgumentNullException">
     ''' Thrown when <paramref name="format"/> is <see langword="Nothing"/>.
     ''' </exception>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Sub ApplyDisplayFormat(format As DisplayFormat, persist As Boolean)
 
         If format Is Nothing Then
@@ -312,13 +280,11 @@ Public Class Form1
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Converts a price text from a display format to another (e.g. "1,344.00" to "1.344,00").
     ''' <para></para>
     ''' Empty or invalid text is returned unchanged.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Shared Function ConvertPriceText(text As String, sourceFormat As DisplayFormat, targetFormat As DisplayFormat) As String
         Dim price As Double
         If ProfitLossCalculator.TryParsePrice(text, sourceFormat, price) Then
@@ -327,11 +293,9 @@ Public Class Form1
         Return text
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Updates the text and tooltips of the currency and decimal separator buttons.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub UpdateDisplayFormatButtons()
         Dim format As DisplayFormat = Me.displayFormatField
 
@@ -358,24 +322,19 @@ Public Class Form1
         Me.ApplyDisplayFormat(Me.displayFormatField.WithDecimalSeparator(separator), persist:=True)
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Loads the display format saved in the user settings.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <exception cref="InvalidOperationException">
     ''' Thrown when the saved settings contain an invalid value.
     ''' </exception>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Shared Function LoadDisplayFormatFromSettings() As DisplayFormat
         Return Form1.ParseDisplayFormat(My.Settings.Currency, My.Settings.DecimalSeparator)
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Saves the specified display format in the user settings.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Shared Sub SaveDisplayFormatToSettings(format As DisplayFormat)
         If format Is Nothing Then
             Throw New ArgumentNullException(NameOf(format))
@@ -386,11 +345,9 @@ Public Class Form1
         My.Settings.Save()
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Parses a display format from the names of its currency and decimal separator, as saved in the settings.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="currencyName">
     ''' The name of a <see cref="CurrencyKind"/> value (e.g. "Euro").
     ''' </param>
@@ -398,11 +355,9 @@ Public Class Form1
     ''' <param name="decimalSeparatorName">
     ''' The name of a <see cref="DecimalSeparatorKind"/> value (e.g. "Comma").
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <exception cref="InvalidOperationException">
     ''' Thrown when a name is not a valid value.
     ''' </exception>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Shared Function ParseDisplayFormat(currencyName As String, decimalSeparatorName As String) As DisplayFormat
 
         Dim currency As CurrencyKind
@@ -426,12 +381,10 @@ Public Class Form1
 
 #Region " GitHub "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Updates the GitHub button image: the white mark for the dark theme and the black mark for the light theme,
     ''' scaled to the size of the button.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub UpdateGitHubButtonImage(palette As ThemePalette)
 
         Dim side As Integer = Math.Max(8, CInt(Math.Round(Me.ButtonGitHub.ClientSize.Height * 0.62)))
@@ -447,11 +400,9 @@ Public Class Form1
         previous?.Dispose()
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Scales an image to fit in a square of the specified side, keeping its aspect ratio, with high quality.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Shared Function ScaleImage(source As Image, side As Integer) As Bitmap
 
         If source Is Nothing Then
@@ -491,6 +442,8 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' The numeric up/down controls display and parse numbers using the culture of the thread.
         Application.CurrentCulture = Me.displayFormatField.Culture
+
+        Me.Text = $"{My.Application.Info.Title} {My.Application.Info.Version.ToString(2)}"
     End Sub
 
     Private Sub NumericUpDownInvestedMoney_TextChanged(sender As Object, e As EventArgs) Handles NumericUpDownInvestedMoney.TextChanged, NumericUpDownInvestedMoney.ValueChanged
@@ -550,7 +503,6 @@ Public Class Form1
         Me.FormatPriceText(DirectCast(sender, TextBox))
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Determines whether the specified character can be typed in a price text box: 
     ''' digits, the dot and the comma (decimal and thousands separators) and control characters 
@@ -559,26 +511,21 @@ Public Class Form1
     ''' This only prevents obviously wrong characters: a text made of allowed characters can still be invalid 
     ''' (e.g. "3.00.33.3.88"), and a pasted text is not filtered; those cases are reported as input errors.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="c">
     ''' The typed character.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <returns>
     ''' <see langword="True"/> if the character can be typed; otherwise, <see langword="False"/>.
     ''' </returns>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Shared Function IsAllowedPriceChar(c As Char) As Boolean
         Return Char.IsControl(c) OrElse (c >= "0"c AndAlso c <= "9"c) OrElse c = "."c OrElse c = ","c
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Determines whether the text of an input field must be reported as invalid.
     ''' <para></para>
     ''' An empty field is not an error (the result is just not available).
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="text">
     ''' The text of the input field.
     ''' </param>
@@ -586,26 +533,21 @@ Public Class Form1
     ''' <param name="isParsed">
     ''' <see langword="True"/> if the text was parsed successfully; otherwise, <see langword="False"/>.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <returns>
     ''' <see langword="True"/> if the text is not empty and could not be parsed; otherwise, <see langword="False"/>.
     ''' </returns>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Shared Function IsInvalidInput(text As String, isParsed As Boolean) As Boolean
         Return Not isParsed AndAlso Not String.IsNullOrWhiteSpace(text)
     End Function
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Formats the price of the specified text box with thousands separators and decimals (e.g. "1,344.00").
     ''' <para></para>
     ''' Empty or invalid text is left unchanged, so the user can see and fix it.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <param name="textBox">
     ''' The text box that contains the price.
     ''' </param>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Sub FormatPriceText(textBox As TextBox)
 
         If textBox Is Nothing Then
@@ -644,11 +586,9 @@ Public Class Form1
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' In "Percent" mode, calculates the target price from the entry price and the percentage typed by the user.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Sub UpdateTargetPriceFromPercent()
         ' Value is not read here: reading it while typing reformats the text and moves the caret to the beginning.
         Dim percent As Decimal
@@ -699,15 +639,12 @@ Public Class Form1
         End If
     End Sub
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets the message that describes the first input field with an invalid value, if any.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <returns>
     ''' The error message, or <see langword="Nothing"/> if all the input fields are valid.
     ''' </returns>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend Function GetInputErrorMessage() As String
 
         If Me.FrameInvestedMoney.HasError Then

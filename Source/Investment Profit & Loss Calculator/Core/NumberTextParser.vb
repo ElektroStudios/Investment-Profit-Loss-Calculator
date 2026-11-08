@@ -17,7 +17,6 @@ Imports System.Text.RegularExpressions
 
 Namespace Core
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Parses numbers typed by the user, accepting both the dot (".") and the comma (",")
     ''' as decimal separator, with optional thousands separators, independently of the current culture.
@@ -41,34 +40,27 @@ Namespace Core
     '''   </description></item>
     ''' </list>
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Public NotInheritable Class NumberTextParser
 
 #Region " Constants "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The default preferred decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Public Const DefaultDecimalSeparator As Char = "."c
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The number styles accepted for the normalized text.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Const NormalizedNumberStyles As NumberStyles = NumberStyles.Float
 
 #End Region
 
 #Region " Constructors "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Prevents a default instance of the <see cref="NumberTextParser"/> class from being created.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Sub New()
         End Sub
 
@@ -76,25 +68,21 @@ Namespace Core
 
 #Region " Public Methods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Converts the text typed by the user to an invariant culture number text
         ''' (dot as decimal separator, no thousands separators), using the dot as preferred decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <inheritdoc cref="TryNormalize(String, Char, ByRef String)"/>
         Public Shared Function TryNormalize(text As String, ByRef normalized As String) As Boolean
             Return NumberTextParser.TryNormalize(text, DefaultDecimalSeparator, normalized)
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Converts the text typed by the user to an invariant culture number text
         ''' (dot as decimal separator, no thousands separators).
         ''' <para></para>
         ''' This method only normalizes the separators; it does not validate the rest of the text.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <param name="text">
         ''' The text to normalize.
         ''' </param>
@@ -106,11 +94,9 @@ Namespace Core
         ''' <param name="normalized">
         ''' When this method returns, contains the normalized text, or <see langword="Nothing"/> if the separators are invalid.
         ''' </param>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <returns>
         ''' <see langword="True"/> if the separators are valid; otherwise, <see langword="False"/>.
         ''' </returns>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <exception cref="ArgumentNullException">
         ''' Thrown when <paramref name="text"/> is <see langword="Nothing"/>.
         ''' </exception>
@@ -118,7 +104,6 @@ Namespace Core
         ''' <exception cref="ArgumentOutOfRangeException">
         ''' Thrown when <paramref name="preferredDecimalSeparator"/> is not "." or ",".
         ''' </exception>
-        ''' ----------------------------------------------------------------------------------------------------
         Public Shared Function TryNormalize(text As String, preferredDecimalSeparator As Char, ByRef normalized As String) As Boolean
 
             If text Is Nothing Then
@@ -167,21 +152,17 @@ Namespace Core
             Return True
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Parses a <see cref="Double"/> typed by the user, using the dot as preferred decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <inheritdoc cref="TryParseDouble(String, Char, ByRef Double)"/>
         Public Shared Function TryParseDouble(text As String, ByRef value As Double) As Boolean
             Return NumberTextParser.TryParseDouble(text, DefaultDecimalSeparator, value)
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Parses a <see cref="Double"/> typed by the user.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <param name="text">
         ''' The text to parse.
         ''' </param>
@@ -193,12 +174,10 @@ Namespace Core
         ''' <param name="value">
         ''' When this method returns, contains the parsed value, or zero if the parsing failed.
         ''' </param>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <returns>
         ''' <see langword="True"/> if <paramref name="text"/> was parsed successfully
         ''' to a finite value; otherwise, <see langword="False"/>.
         ''' </returns>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <exception cref="ArgumentNullException">
         ''' Thrown when <paramref name="text"/> is <see langword="Nothing"/>.
         ''' </exception>
@@ -206,7 +185,6 @@ Namespace Core
         ''' <exception cref="ArgumentOutOfRangeException">
         ''' Thrown when <paramref name="preferredDecimalSeparator"/> is not "." or ",".
         ''' </exception>
-        ''' ----------------------------------------------------------------------------------------------------
         Public Shared Function TryParseDouble(text As String, preferredDecimalSeparator As Char, ByRef value As Double) As Boolean
 
             Dim normalized As String = Nothing
@@ -221,21 +199,17 @@ Namespace Core
             Return True
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Parses a <see cref="Decimal"/> typed by the user, using the dot as preferred decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <inheritdoc cref="TryParseDecimal(String, Char, ByRef Decimal)"/>
         Public Shared Function TryParseDecimal(text As String, ByRef value As Decimal) As Boolean
             Return NumberTextParser.TryParseDecimal(text, DefaultDecimalSeparator, value)
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Parses a <see cref="Decimal"/> typed by the user.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <param name="text">
         ''' The text to parse.
         ''' </param>
@@ -247,11 +221,9 @@ Namespace Core
         ''' <param name="value">
         ''' When this method returns, contains the parsed value, or zero if the parsing failed.
         ''' </param>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <returns>
         ''' <see langword="True"/> if <paramref name="text"/> was parsed successfully; otherwise, <see langword="False"/>.
         ''' </returns>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <exception cref="ArgumentNullException">
         ''' Thrown when <paramref name="text"/> is <see langword="Nothing"/>.
         ''' </exception>
@@ -259,7 +231,6 @@ Namespace Core
         ''' <exception cref="ArgumentOutOfRangeException">
         ''' Thrown when <paramref name="preferredDecimalSeparator"/> is not "." or ",".
         ''' </exception>
-        ''' ----------------------------------------------------------------------------------------------------
         Public Shared Function TryParseDecimal(text As String, preferredDecimalSeparator As Char, ByRef value As Decimal) As Boolean
 
             Dim normalized As String = Nothing
@@ -277,13 +248,11 @@ Namespace Core
 
 #Region " Private Methods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Normalizes a text that contains only one kind of separator:
         ''' it is a thousands separator if the text is an integer with at least <paramref name="minimumGroups"/>
         ''' valid thousands groups; otherwise a single separator is the decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function TryNormalizeSingleSeparatorKind(text As String, separator As Char, minimumGroups As Integer, ByRef normalized As String) As Boolean
 
             If NumberTextParser.IsGroupedInteger(text, separator, minimumGroups) Then
@@ -300,12 +269,10 @@ Namespace Core
             Return True
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Determines whether the specified text is an integer number
         ''' with at least the specified number of valid thousands groups.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function IsGroupedInteger(text As String, groupSeparator As Char, minimumGroups As Integer) As Boolean
             Dim escaped As String = Regex.Escape(groupSeparator.ToString())
             Dim pattern As String = $"^[+-]?[1-9][0-9]{{0,2}}({escaped}[0-9]{{3}}){{{minimumGroups},}}$"

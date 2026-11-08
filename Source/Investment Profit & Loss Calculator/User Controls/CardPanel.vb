@@ -16,32 +16,26 @@ Imports System.Windows.Forms
 
 #Region " CardPanel "
 
-''' ----------------------------------------------------------------------------------------------------
 ''' <summary>
 ''' A flat panel with a thin border, used to group related content as a "card".
 ''' </summary>
-''' ----------------------------------------------------------------------------------------------------
 <DesignerCategory("Code")>
 Public Class CardPanel : Inherits Panel
 
 #Region " Fields "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The value of the <see cref="CardPanel.BorderColor"/> property.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private borderColorField As Color = SystemColors.ControlDark
 
 #End Region
 
 #Region " Properties "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the border color.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The border color.")>
     Public Property BorderColor As Color
@@ -58,11 +52,9 @@ Public Class CardPanel : Inherits Panel
 
 #Region " Constructors "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Initializes a new instance of the <see cref="CardPanel"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Public Sub New()
         MyBase.New()
 
@@ -76,11 +68,9 @@ Public Class CardPanel : Inherits Panel
 
 #Region " Overridden Methods "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Raises the <see cref="Control.Paint"/> event, drawing the border of the card.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
         MyBase.OnPaint(e)
 

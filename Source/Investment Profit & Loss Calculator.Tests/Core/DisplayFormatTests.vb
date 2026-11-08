@@ -18,30 +18,24 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 
 Namespace Core
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Unit tests for the <see cref="DisplayFormat"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <TestClass>
     Public NotInheritable Class DisplayFormatTests
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the default format is US dollar with dot as decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Default_IsUsDollarWithDot()
             Assert.AreEqual(CurrencyKind.UsDollar, DisplayFormat.Default.Currency)
             Assert.AreEqual(DecimalSeparatorKind.Dot, DisplayFormat.Default.DecimalSeparator)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the separators and symbols of every combination of currency and decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot, "."c, ","c, "$")>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Comma, ","c, "."c, "$")>
@@ -62,11 +56,9 @@ Namespace Core
             Assert.AreSame(format.NumberFormat, format.Culture.NumberFormat)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the currency format: the dollar symbol goes before the amount, the euro symbol after it.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot, 1234.5, "$1,234.50")>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot, -1234.5, "-$1,234.50")>
@@ -78,11 +70,9 @@ Namespace Core
             Assert.AreEqual(expected, New DisplayFormat(currency, separator).FormatCurrency(amount, 2))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the format does not depend on the culture of the current thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("de-DE")>
         <DataRow("es-ES")>
@@ -95,12 +85,10 @@ Namespace Core
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that <see cref="DisplayFormat.WithCurrency"/> and <see cref="DisplayFormat.WithDecimalSeparator"/>
         ''' only change the specified setting.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub WithMethods_ChangeOnlyOneSetting()
             Dim euroDot As DisplayFormat = DisplayFormat.Default.WithCurrency(CurrencyKind.Euro)
@@ -112,11 +100,9 @@ Namespace Core
             Assert.AreEqual(DecimalSeparatorKind.Comma, euroComma.DecimalSeparator)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the value equality of display formats.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Equals_ComparesSettings()
             Dim a As New DisplayFormat(CurrencyKind.Euro, DecimalSeparatorKind.Comma)
@@ -129,11 +115,9 @@ Namespace Core
             Assert.AreEqual(DisplayFormat.Default, New DisplayFormat(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that undefined enumeration values throw <see cref="ArgumentOutOfRangeException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Constructor_UndefinedValues_Throw()
             Assert.ThrowsExactly(Of ArgumentOutOfRangeException)(Function() New DisplayFormat(CType(99, CurrencyKind), DecimalSeparatorKind.Dot))

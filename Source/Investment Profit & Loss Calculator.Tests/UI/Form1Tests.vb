@@ -25,44 +25,36 @@ Imports Theming
 
 Namespace UI
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Integration tests for the main window (<see cref="Global.Form1"/>),
     ''' verifying how user input is wired to the profit and loss calculation.
     ''' <para></para>
     ''' The window is shown off-screen, so these tests require an interactive Windows session.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <STATestClass>
     <TestCategory("UI")>
     Public NotInheritable Class Form1Tests
 
 #Region " Fields "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The window under test.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private form As Global.Form1
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The culture of the test thread before the test,
         ''' because <see cref="Global.Form1"/> changes it when loaded.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private originalCulture As CultureInfo
 
 #End Region
 
 #Region " Test Initialization / Cleanup "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Creates and shows the window under test.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestInitialize>
         Public Sub TestInitialize()
             Me.originalCulture = Thread.CurrentThread.CurrentCulture
@@ -78,11 +70,9 @@ Namespace UI
             Application.DoEvents()
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Closes the window under test and restores the culture of the test thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestCleanup>
         Public Sub TestCleanup()
             Me.form.Close()
@@ -94,11 +84,9 @@ Namespace UI
 
 #Region " Private Methods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Fills the input controls of the window in "Fixed" target price mode.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Sub EnterFixedInput(invested As Decimal, currentPrice As String, targetPrice As String, leverage As Decimal)
             Me.form.RadioButtonTargetPriceFixed.Checked = True
             Me.form.NumericUpDownLeverage.Value = leverage
@@ -107,11 +95,9 @@ Namespace UI
             Me.form.TextBoxTargetPrice.Text = targetPrice
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Formats an amount as US dollars with the default display format of the application.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function FormatUsd(amount As Double) As String
             Return DisplayFormat.Default.FormatCurrency(amount, 2)
         End Function
@@ -120,11 +106,9 @@ Namespace UI
 
 #Region " Tests "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the initial state of the window.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InitialState_IsFixedModeWithoutResult()
             Assert.IsTrue(Me.form.RadioButtonTargetPriceFixed.Checked)
@@ -134,22 +118,18 @@ Namespace UI
             Assert.AreEqual(1D, Me.form.NumericUpDownLeverage.Value)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the culture of the UI thread uses the number format of the current display format.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Load_SetsDisplayFormatCulture()
             Assert.AreSame(Me.form.CurrentDisplayFormat.Culture, Thread.CurrentThread.CurrentCulture)
             Assert.AreEqual(".", Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies a profitable calculation in "Fixed" target price mode.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_Profit_ShowsProfitInGreen()
             Me.EnterFixedInput(100D, "100", "150", 1D)
@@ -159,11 +139,9 @@ Namespace UI
             Assert.IsTrue(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies a losing calculation in "Fixed" target price mode.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_Loss_ShowsLossInRed()
             Me.EnterFixedInput(100D, "100", "50", 1D)
@@ -173,11 +151,9 @@ Namespace UI
             Assert.IsTrue(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies a break-even calculation in "Fixed" target price mode.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_BreakEven_ShowsZeroInGray()
             Me.EnterFixedInput(100D, "100", "100", 1D)
@@ -187,11 +163,9 @@ Namespace UI
             Assert.IsTrue(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the leverage multiplies the profit and loss amount.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_WithLeverage_MultipliesAmount()
             Me.EnterFixedInput(100D, "100", "110", 10D)
@@ -199,11 +173,9 @@ Namespace UI
             Assert.AreEqual("$100.00  (+10%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that changing the leverage after the input recalculates the result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_ChangingLeverage_Recalculates()
             Me.EnterFixedInput(100D, "100", "110", 1D)
@@ -213,11 +185,9 @@ Namespace UI
             Assert.AreEqual("$50.00  (+10%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the comma is accepted as decimal separator in price text boxes.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_CommaDecimalSeparator_IsAccepted()
             Me.EnterFixedInput(100D, "1,5", "3", 1D)
@@ -225,11 +195,9 @@ Namespace UI
             Assert.AreEqual("$100.00  (+100%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that in "Fixed" mode the percentage control reflects the price change.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_UpdatesPercentControl()
             Me.EnterFixedInput(100D, "200", "250", 1D)
@@ -237,11 +205,9 @@ Namespace UI
             Assert.AreEqual(25D, Me.form.NumericUpDownTargetPrice.Value)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a negative target price is reset to zero.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FixedMode_NegativeTargetPrice_IsResetToZero()
             Me.EnterFixedInput(100D, "100", "-5", 1D)
@@ -250,11 +216,9 @@ Namespace UI
             Assert.AreEqual($"{FormatUsd(-100)}  (-100%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the result is not available without invested money.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ZeroInvested_ShowsNotAvailable()
             Me.EnterFixedInput(0D, "100", "150", 1D)
@@ -264,13 +228,11 @@ Namespace UI
             Assert.IsFalse(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the result is not available without an entry price (empty or zero).
         ''' <para></para>
         ''' A non-numeric entry price is not "not available" but an input error: see <see cref="InvalidEntryPrice_IsReported"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("", DisplayName:="Empty")>
         <DataRow("0", DisplayName:="Zero")>
@@ -281,11 +243,9 @@ Namespace UI
             Assert.IsFalse(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the result is not available without a target price.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub EmptyTargetPrice_ShowsNotAvailable()
             Me.EnterFixedInput(100D, "100", "150", 1D)
@@ -296,11 +256,9 @@ Namespace UI
             Assert.IsFalse(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that selecting "Percent" mode swaps the enabled input controls.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub PercentMode_SwapsEnabledControls()
             Me.form.RadioButtonTargetPricePercent.Checked = True
@@ -314,11 +272,9 @@ Namespace UI
             Assert.IsFalse(Me.form.NumericUpDownTargetPrice.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that in "Percent" mode the target price is calculated from the percentage.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub PercentMode_CalculatesTargetPriceFromPercent()
             Me.form.RadioButtonTargetPricePercent.Checked = True
@@ -330,12 +286,10 @@ Namespace UI
             Assert.AreEqual("$25.00  (+25%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that in "Percent" mode, changing the current price keeps the percentage
         ''' and recalculates the target price.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub PercentMode_ChangingCurrentPrice_RecalculatesTargetPrice()
             Me.form.RadioButtonTargetPricePercent.Checked = True
@@ -350,11 +304,9 @@ Namespace UI
             Assert.AreEqual($"{FormatUsd(-10)}  (-10%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the "Clear" button resets the input and the result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ClearButton_ResetsInputAndResult()
             Me.EnterFixedInput(100D, "100", "150", 10D)
@@ -370,11 +322,9 @@ Namespace UI
             Assert.IsFalse(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the "Always on top" check box toggles <see cref="Form.TopMost"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub AlwaysOnTopCheckBox_TogglesTopMost()
             Me.form.CheckBoxAlwaysOnTop.Checked = True
@@ -384,11 +334,9 @@ Namespace UI
             Assert.IsFalse(Me.form.TopMost)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the palette applied to the window corresponds to the Windows app mode.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Theme_FollowsWindowsAppMode()
             Dim expected As ThemePalette = ThemePalette.FromDarkMode(WindowsTheme.IsAppDarkModeEnabled())
@@ -401,11 +349,9 @@ Namespace UI
             Assert.AreEqual(expected.CardBackColor, Me.form.PanelResult.BackColor)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the selected "Price" / "Percent" segment is highlighted with the accent color.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub TargetModeButtons_HighlightSelectedSegment()
             Dim palette As ThemePalette = Me.form.CurrentPalette
@@ -420,12 +366,10 @@ Namespace UI
             Assert.AreEqual(palette.AccentColor, Me.form.RadioButtonTargetPricePercent.FlatAppearance.CheckedBackColor)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that prices are formatted with thousands separators and decimals when the text box loses the focus,
         ''' without changing the calculated result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("42000.5", "42,000.50")>
         <DataRow("1000,5", "1,000.50")>
@@ -442,11 +386,9 @@ Namespace UI
             Assert.AreEqual(resultBefore, Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that empty or invalid prices are not modified when formatted.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("")>
         <DataRow("abc")>
@@ -459,11 +401,9 @@ Namespace UI
             Assert.AreEqual(text, Me.form.TextBoxCurrentPrice.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the invested amount accepts cents.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InvestedMoney_AcceptsDecimals()
             Assert.AreEqual(2, Me.form.NumericUpDownInvestedMoney.DecimalPlaces)
@@ -473,12 +413,10 @@ Namespace UI
             Assert.AreEqual("$500.25  (+50%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the window is captured from the screen with its visible bounds 
         ''' (including the title bar rendered by DWM), and that the client area has the theme background.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CaptureFromScreen_CapturesVisibleWindow()
             Me.form.Location = New Point(100, 100)
@@ -495,12 +433,10 @@ Namespace UI
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that switching between the dark and light themes while the window is open 
         ''' updates the colors of the window, the controls and the current result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ApplyThemeMode_SwitchesThemeWhileOpen()
             Dim original As ThemePalette = Me.form.CurrentPalette
@@ -520,12 +456,10 @@ Namespace UI
             Next
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the window processes a real WM_SETTINGCHANGE "ImmersiveColorSet" message, 
         ''' keeping the theme that corresponds to the current Windows setting.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub WndProc_ColorModeChangeMessage_FollowsWindowsSetting()
             ' Starts from the opposite theme, so the message must restore the theme of the Windows setting.
@@ -542,12 +476,10 @@ Namespace UI
             Assert.AreSame(ThemePalette.FromDarkMode(systemIsDark), Me.form.CurrentPalette)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Gets the internal edit box of a <see cref="NumericUpDown"/>, 
         ''' used to simulate the user typing without the validation performed by the Text setter.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function GetEditBox(numeric As NumericUpDown) As TextBox
             For Each child As Control In numeric.Controls
                 If TypeOf child Is TextBox Then
@@ -557,12 +489,10 @@ Namespace UI
             Throw New InvalidOperationException("The edit box of the NumericUpDown was not found.")
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that typing a decimal amount does not reformat the text being typed 
         ''' (which moved the caret to the beginning), while the result is updated live.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1", "$0.50  (+50%)")>
         <DataRow("1000", "$500.00  (+50%)")>
@@ -581,12 +511,10 @@ Namespace UI
             Assert.IsFalse(Me.form.FrameInvestedMoney.HasError)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that typing a decimal percentage does not reformat the text being typed, 
         ''' while the target price and the result are updated live.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("12", "224.00", "$12.00  (+12%)")>
         <DataRow("12,", "224.00", "$12.00  (+12%)")>
@@ -605,11 +533,9 @@ Namespace UI
             Assert.AreEqual(expectedResult, Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that typing a leverage does not reformat the text being typed.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub TypingLeverage_UpdatesResultLive()
             Me.EnterFixedInput(100D, "100", "110", 1D)
@@ -621,12 +547,10 @@ Namespace UI
             Assert.AreEqual("$200.00  (+10%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that invalid prices are reported: the field border and the result show the error, 
         ''' and the screenshot is disabled until the price is fixed.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("3.00.33.3.88")>
         <DataRow("1,2,3")>
@@ -649,11 +573,9 @@ Namespace UI
             Assert.IsTrue(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that an invalid target price is reported.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InvalidTargetPrice_IsReported()
             Me.EnterFixedInput(100D, "100", "1.2.3", 1D)
@@ -663,11 +585,9 @@ Namespace UI
             Assert.IsFalse(Me.form.ButtonMakeScreenshot.Enabled)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that an invalid typed amount is reported.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InvalidInvestedMoney_IsReported()
             Me.EnterFixedInput(100D, "100", "150", 1D)
@@ -678,11 +598,9 @@ Namespace UI
             Assert.AreEqual("Invalid amount invested", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that empty fields are not reported as errors (the result is just not available).
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub EmptyFields_AreNotErrors()
             Me.EnterFixedInput(100D, "100", "150", 1D)
@@ -696,11 +614,9 @@ Namespace UI
             Assert.AreEqual("N/A", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the characters that can be typed in the price text boxes.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("0"c, True)>
         <DataRow("9"c, True)>
@@ -717,12 +633,10 @@ Namespace UI
             Assert.AreEqual(expected, Global.Form1.IsAllowedPriceChar(c))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that switching the decimal separator reformats the prices, the numeric fields and the result,
         ''' keeping their values.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ApplyDisplayFormat_DecimalSeparator_ReformatsValues()
             Me.EnterFixedInput(1000.5D, "1344", "1500", 1D)
@@ -747,11 +661,9 @@ Namespace UI
             Assert.AreEqual("1,000.00", Me.form.ButtonDecimalSeparator.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that switching the currency updates the caption, the button and the result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ApplyDisplayFormat_Currency_UpdatesCaptionAndResult()
             Me.EnterFixedInput(100D, "100", "150", 1D)
@@ -769,11 +681,9 @@ Namespace UI
             Assert.AreEqual("$50.00  (+50%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that, with the comma as decimal separator, ambiguous prices are read the European way.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CommaDecimalSeparator_ParsesAmbiguousPrices()
             Me.form.ApplyDisplayFormat(DisplayFormat.Default.WithDecimalSeparator(DecimalSeparatorKind.Comma), persist:=False)
@@ -784,11 +694,9 @@ Namespace UI
             Assert.AreEqual("$99.900,00  (+99900%)", Me.form.LabelProfitValue.Text)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the currency and decimal separator buttons toggle the format and save it in the settings.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub DisplayFormatButtons_ToggleAndPersist()
             Dim originalSettings As DisplayFormat = Global.Form1.LoadDisplayFormatFromSettings()
@@ -809,11 +717,9 @@ Namespace UI
             End Try
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the parsing of the display format saved in the settings.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("UsDollar", "Dot", CurrencyKind.UsDollar, DecimalSeparatorKind.Dot)>
         <DataRow("Euro", "Comma", CurrencyKind.Euro, DecimalSeparatorKind.Comma)>
@@ -822,11 +728,9 @@ Namespace UI
             Assert.AreEqual(New DisplayFormat(currency, separator), Global.Form1.ParseDisplayFormat(currencyName, separatorName))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that invalid saved values throw <see cref="InvalidOperationException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("euro", "Dot", DisplayName:="Different casing")>
         <DataRow("1", "Dot", DisplayName:="Numeric value")>
@@ -838,11 +742,9 @@ Namespace UI
             Assert.ThrowsExactly(Of InvalidOperationException)(Function() Global.Form1.ParseDisplayFormat(currencyName, separatorName))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the conversion of price texts between display formats.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1,344.00", "1.344,00")>
         <DataRow("1344", "1.344,00")>
@@ -853,12 +755,10 @@ Namespace UI
             Assert.AreEqual(expected, Global.Form1.ConvertPriceText(text, DisplayFormat.Default, comma))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the GitHub button has a scaled image that is replaced when the theme changes, 
         ''' and that it points to the repository.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub GitHubButton_HasThemedImage()
             Dim image As Image = Me.form.ButtonGitHub.Image
@@ -873,11 +773,9 @@ Namespace UI
             Me.form.ApplyThemeMode(isDark)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that images are scaled to a square, keeping their aspect ratio and centered.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ScaleImage_FitsInSquare()
             Using source As New Bitmap(294, 288), g As Graphics = Graphics.FromImage(source)
@@ -892,11 +790,9 @@ Namespace UI
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the input frames stretch and vertically center the hosted controls.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InputFrames_LayOutHostedControls()
             Dim frame As InputFrame = Me.form.FrameCurrentPrice
@@ -916,11 +812,9 @@ Namespace UI
 
 #Region " NativeMethods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Platform invocation methods.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private NotInheritable Class NativeMethods
 
             ''' <summary>

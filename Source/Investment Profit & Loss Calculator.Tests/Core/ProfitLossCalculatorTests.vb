@@ -20,32 +20,26 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 
 Namespace Core
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Unit tests for the <see cref="ProfitLossCalculator"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <TestClass>
     Public NotInheritable Class ProfitLossCalculatorTests
 
 #Region " Constants "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The tolerance used to compare floating point values.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Const Tolerance As Double = 0.000000001
 
 #End Region
 
 #Region " TryParsePrice "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that valid prices are parsed, accepting both dot and comma as decimal separator.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("123.45", 123.45, DisplayName:="Dot decimal separator")>
         <DataRow("123,45", 123.45, DisplayName:="Comma decimal separator")>
@@ -72,11 +66,9 @@ Namespace Core
             Assert.AreEqual(expected, value, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that invalid prices are rejected and the output value is reset to zero.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("", DisplayName:="Empty")>
         <DataRow("   ", DisplayName:="White spaces")>
@@ -101,11 +93,9 @@ Namespace Core
             Assert.AreEqual(0.0, value)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that parsing does not depend on the culture of the current thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("de-DE")>
         <DataRow("es-ES")>
@@ -124,11 +114,9 @@ Namespace Core
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a null text throws <see cref="ArgumentNullException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub TryParsePrice_NullText_ThrowsArgumentNullException()
             Dim value As Double
@@ -140,11 +128,9 @@ Namespace Core
 
 #Region " FormatPrice "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the display format of prices.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(1344.0, "1,344.00", DisplayName:="Thousands separator and two decimals")>
         <DataRow(0.0, "0.00", DisplayName:="Zero")>
@@ -157,11 +143,9 @@ Namespace Core
             Assert.AreEqual(expected, ProfitLossCalculator.FormatPrice(price))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that formatted prices can be parsed back to the same value.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(1344.0)>
         <DataRow(0.5)>
@@ -174,11 +158,9 @@ Namespace Core
             Assert.AreEqual(price, parsed, Math.Abs(price) * 0.000000001)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the display format does not depend on the culture of the current thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("de-DE")>
         <DataRow("es-ES")>
@@ -189,11 +171,9 @@ Namespace Core
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that non-finite prices throw <see cref="ArgumentOutOfRangeException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(Double.NaN)>
         <DataRow(Double.PositiveInfinity)>
@@ -206,11 +186,9 @@ Namespace Core
 
 #Region " Display Format "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the price format with both decimal separators.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(DecimalSeparatorKind.Dot, 1344.0, "1,344.00")>
         <DataRow(DecimalSeparatorKind.Comma, 1344.0, "1.344,00")>
@@ -221,11 +199,9 @@ Namespace Core
             Assert.AreEqual(expected, ProfitLossCalculator.FormatPrice(price, format))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that ambiguous prices are parsed with the decimal separator of the display format.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(DecimalSeparatorKind.Dot, "1,500", 1500.0)>
         <DataRow(DecimalSeparatorKind.Dot, "1.500", 1.5)>
@@ -240,11 +216,9 @@ Namespace Core
             Assert.AreEqual(expected, value, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that formatted prices are parsed back to the same value with every display format.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Dot)>
         <DataRow(CurrencyKind.UsDollar, DecimalSeparatorKind.Comma)>
@@ -259,11 +233,9 @@ Namespace Core
             Next
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a null display format throws <see cref="ArgumentNullException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub NullDisplayFormat_Throws()
             Dim value As Double
@@ -275,11 +247,9 @@ Namespace Core
 
 #Region " CalculateTargetPrice "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the target price calculated from a percentage change.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(100.0, 10.0, 110.0, DisplayName:="+10%")>
         <DataRow(100.0, -10.0, 90.0, DisplayName:="-10%")>
@@ -298,11 +268,9 @@ Namespace Core
 
 #Region " CalculatePriceChangePercent "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the percentage change between two prices.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(100.0, 110.0, 10.0, DisplayName:="Price up")>
         <DataRow(100.0, 90.0, -10.0, DisplayName:="Price down")>
@@ -315,34 +283,28 @@ Namespace Core
             Assert.AreEqual(expected, actual, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the percentage change is NaN when both prices are zero.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CalculatePriceChangePercent_BothPricesZero_ReturnsNaN()
             Dim actual As Double = ProfitLossCalculator.CalculatePriceChangePercent(0, 0)
             Assert.IsTrue(Double.IsNaN(actual))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the percentage change is infinite when only the current price is zero.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CalculatePriceChangePercent_ZeroCurrentPrice_ReturnsInfinity()
             Assert.IsTrue(Double.IsPositiveInfinity(ProfitLossCalculator.CalculatePriceChangePercent(0, 10)))
             Assert.IsTrue(Double.IsNegativeInfinity(ProfitLossCalculator.CalculatePriceChangePercent(0, -10)))
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that <see cref="ProfitLossCalculator.CalculatePriceChangePercent"/> is the inverse of
         ''' <see cref="ProfitLossCalculator.CalculateTargetPrice"/> for positive prices.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(100.0, 12.5)>
         <DataRow(0.0001, -37.25)>
@@ -359,11 +321,9 @@ Namespace Core
 
 #Region " CalculateProfitLoss "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the profit and loss amount for different scenarios.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(100.0, 100.0, 150.0, 1.0, 50.0, DisplayName:="Profit without leverage")>
         <DataRow(100.0, 100.0, 50.0, 1.0, -50.0, DisplayName:="Loss without leverage")>
@@ -379,23 +339,19 @@ Namespace Core
             Assert.AreEqual(expected, actual, 0.0000001)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Documents that the calculator does not model liquidations:
         ''' with leverage, the calculated loss can exceed the invested money.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CalculateProfitLoss_LeveragedLoss_IsNotCappedToInvestedMoney()
             Dim actual As Double = ProfitLossCalculator.CalculateProfitLoss(100, 100, 0, 5)
             Assert.AreEqual(-500.0, actual, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the profit and loss amount scales linearly with the leverage.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(2.0)>
         <DataRow(10.0)>
@@ -407,11 +363,9 @@ Namespace Core
             Assert.AreEqual(baseAmount * leverage, leveragedAmount, 0.0000001)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a zero current price throws <see cref="ArgumentOutOfRangeException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CalculateProfitLoss_ZeroCurrentPrice_Throws()
             Dim ex As ArgumentOutOfRangeException = Assert.ThrowsExactly(Of ArgumentOutOfRangeException)(
@@ -419,12 +373,10 @@ Namespace Core
             Assert.AreEqual("currentPrice", ex.ParamName)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that out of range arguments throw <see cref="ArgumentOutOfRangeException"/>
         ''' naming the offending parameter.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(-1.0, 100.0, 150.0, 1.0, "invested", DisplayName:="Negative invested")>
         <DataRow(Double.NaN, 100.0, 150.0, 1.0, "invested", DisplayName:="NaN invested")>
@@ -446,33 +398,27 @@ Namespace Core
 
 #Region " Calculate "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the result is not available when there is no invested money.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_ZeroInvested_ReturnsNotAvailable()
             Dim result As ProfitLossResult = ProfitLossCalculator.Calculate(0, 100, 150, 1)
             Assert.AreSame(ProfitLossResult.NotAvailable, result)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the result is not available when the current price is zero.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_ZeroCurrentPrice_ReturnsNotAvailable()
             Dim result As ProfitLossResult = ProfitLossCalculator.Calculate(100, 0, 150, 1)
             Assert.AreSame(ProfitLossResult.NotAvailable, result)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the kind, amount and percentage change of a profitable result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_Profit_ReturnsProfitResult()
             Dim result As ProfitLossResult = ProfitLossCalculator.Calculate(100, 100, 150, 1)
@@ -483,11 +429,9 @@ Namespace Core
             Assert.AreEqual(50.0, result.ChangePercent, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the kind, amount and percentage change of a losing result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_Loss_ReturnsLossResult()
             Dim result As ProfitLossResult = ProfitLossCalculator.Calculate(200, 50, 40, 1)
@@ -498,11 +442,9 @@ Namespace Core
             Assert.AreEqual(-20.0, result.ChangePercent, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the kind, amount and percentage change of a break-even result.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_BreakEven_ReturnsBreakEvenResult()
             Dim result As ProfitLossResult = ProfitLossCalculator.Calculate(100, 75, 75, 3)
@@ -513,12 +455,10 @@ Namespace Core
             Assert.AreEqual(0.0, result.ChangePercent)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the leverage affects the amount,
         ''' but not the percentage change (which is the asset price change).
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_Leverage_AffectsAmountButNotChangePercent()
             Dim result As ProfitLossResult = ProfitLossCalculator.Calculate(100, 100, 110, 20)
@@ -527,11 +467,9 @@ Namespace Core
             Assert.AreEqual(10.0, result.ChangePercent, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a drop of the target price to zero results in a total loss.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_ZeroTargetPrice_ReturnsTotalLoss()
             Dim result As ProfitLossResult = ProfitLossCalculator.Calculate(100, 100, 0, 1)
@@ -541,11 +479,9 @@ Namespace Core
             Assert.AreEqual(-100.0, result.ChangePercent, Tolerance)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the arguments are validated even when the result would not be available.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_InvalidLeverage_ThrowsEvenWhenNotAvailable()
             Dim ex As ArgumentOutOfRangeException = Assert.ThrowsExactly(Of ArgumentOutOfRangeException)(
@@ -553,11 +489,9 @@ Namespace Core
             Assert.AreEqual("leverage", ex.ParamName)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a negative invested amount throws <see cref="ArgumentOutOfRangeException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Calculate_NegativeInvested_Throws()
             Dim ex As ArgumentOutOfRangeException = Assert.ThrowsExactly(Of ArgumentOutOfRangeException)(

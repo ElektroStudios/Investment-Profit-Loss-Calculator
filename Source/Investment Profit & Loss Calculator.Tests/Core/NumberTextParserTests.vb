@@ -22,21 +22,17 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 
 Namespace Core
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Unit tests for the <see cref="NumberTextParser"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <TestClass>
     Public NotInheritable Class NumberTextParserTests
 
 #Region " TryNormalize "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the normalization of valid separators to the invariant format.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1234", "1234", DisplayName:="No separators")>
         <DataRow("  1234  ", "1234", DisplayName:="Trimmed")>
@@ -61,11 +57,9 @@ Namespace Core
             Assert.AreEqual(expected, normalized)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that invalid separators are rejected.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1,2,3", DisplayName:="Multiple commas, not thousands groups")>
         <DataRow("1.2.3", DisplayName:="Multiple dots, not thousands groups")>
@@ -81,11 +75,9 @@ Namespace Core
             Assert.IsNull(normalized)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a null text throws <see cref="ArgumentNullException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub NullText_Throws()
             Dim normalized As String = Nothing
@@ -101,12 +93,10 @@ Namespace Core
 
 #Region " Preferred Decimal Separator "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that ambiguous texts are resolved with the preferred decimal separator,
         ''' while unambiguous texts are parsed the same way with both preferences.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1,500", "."c, "1500", DisplayName:="Dot preferred: comma group")>
         <DataRow("1,500", ","c, "1.500", DisplayName:="Comma preferred: comma decimal")>
@@ -124,11 +114,9 @@ Namespace Core
             Assert.AreEqual(expected, normalized)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that a preferred decimal separator other than "." or "," throws <see cref="ArgumentOutOfRangeException"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub TryNormalize_InvalidPreferredSeparator_Throws()
             Dim normalized As String = Nothing
@@ -139,11 +127,9 @@ Namespace Core
 
 #Region " TryParseDecimal "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies the parsing of decimal values (used by the numeric up/down controls).
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1000,50", "1000.50")>
         <DataRow("1,000.50", "1000.50")>
@@ -158,11 +144,9 @@ Namespace Core
             Assert.AreEqual(Decimal.Parse(expected, CultureInfo.InvariantCulture), value)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that invalid decimal values are rejected and the output value is reset to zero.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("")>
         <DataRow("abc")>
@@ -174,11 +158,9 @@ Namespace Core
             Assert.AreEqual(0D, value)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that parsing does not depend on the culture of the current thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("de-DE")>
         <DataRow("es-ES")>

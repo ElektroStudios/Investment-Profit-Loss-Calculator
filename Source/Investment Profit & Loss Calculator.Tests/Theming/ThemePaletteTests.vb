@@ -21,39 +21,31 @@ Imports Theming
 
 Namespace Theming
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Unit tests for the <see cref="ThemePalette"/> class.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <TestClass>
     Public NotInheritable Class ThemePaletteTests
 
 #Region " Constants "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The minimum contrast ratio for normal text required by WCAG 2.x level AA.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Const MinimumTextContrastRatio As Double = 4.5
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The minimum contrast ratio for user interface components (e.g. focus indicators) required by WCAG 2.1.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Const MinimumComponentContrastRatio As Double = 3.0
 
 #End Region
 
 #Region " Private Methods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Calculates the WCAG 2.x relative luminance of a color.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function GetRelativeLuminance(color As Color) As Double
             Dim linearize As Func(Of Byte, Double) =
                 Function(channel As Byte) As Double
@@ -64,22 +56,18 @@ Namespace Theming
             Return (0.2126 * linearize(color.R)) + (0.7152 * linearize(color.G)) + (0.0722 * linearize(color.B))
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Calculates the WCAG 2.x contrast ratio between two colors.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function GetContrastRatio(color1 As Color, color2 As Color) As Double
             Dim luminance1 As Double = GetRelativeLuminance(color1)
             Dim luminance2 As Double = GetRelativeLuminance(color2)
             Return (Math.Max(luminance1, luminance2) + 0.05) / (Math.Min(luminance1, luminance2) + 0.05)
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Asserts that all the specified foreground/background pairs meet the specified contrast ratio.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Sub AssertContrast(pairs As IEnumerable(Of (Name As String, Foreground As Color, Background As Color)), minimumRatio As Double)
             Dim failures As New List(Of String)
 
@@ -93,11 +81,9 @@ Namespace Theming
             Assert.IsEmpty(failures, $"Contrast ratio below {minimumRatio}: {String.Join(", ", failures)}")
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Gets the palette for a data row.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function GetPalette(isDark As Boolean) As ThemePalette
             Return If(isDark, ThemePalette.Dark, ThemePalette.Light)
         End Function
@@ -106,11 +92,9 @@ Namespace Theming
 
 #Region " Tests "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that <see cref="ThemePalette.FromDarkMode"/> returns the expected palette.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub FromDarkMode_ReturnsExpectedPalette()
             Assert.AreSame(ThemePalette.Dark, ThemePalette.FromDarkMode(True))
@@ -119,22 +103,18 @@ Namespace Theming
             Assert.IsFalse(ThemePalette.Light.IsDark)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the dark palette has dark backgrounds and the light palette has light backgrounds.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub Backgrounds_MatchThemeMode()
             Assert.IsTrue(GetRelativeLuminance(ThemePalette.Dark.WindowBackColor) < 0.1)
             Assert.IsTrue(GetRelativeLuminance(ThemePalette.Light.WindowBackColor) > 0.8)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that all the text colors meet the WCAG AA contrast ratio against the backgrounds they are drawn on.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(True, DisplayName:="Dark")>
         <DataRow(False, DisplayName:="Light")>
@@ -158,11 +138,9 @@ Namespace Theming
             }, MinimumTextContrastRatio)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the focus and error indicators meet the WCAG contrast ratio for user interface components.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(True, DisplayName:="Dark")>
         <DataRow(False, DisplayName:="Light")>
@@ -177,11 +155,9 @@ Namespace Theming
             }, MinimumComponentContrastRatio)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that profit and loss colors are distinguishable from each other and from the neutral color.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(True, DisplayName:="Dark")>
         <DataRow(False, DisplayName:="Light")>
@@ -195,11 +171,9 @@ Namespace Theming
             Assert.IsTrue(p.LossColor.R > p.LossColor.G, "Loss color must be reddish.")
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that all the colors of the palettes are opaque, as transparent colors are not supported by most controls.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow(True, DisplayName:="Dark")>
         <DataRow(False, DisplayName:="Light")>

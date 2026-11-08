@@ -19,7 +19,6 @@ Imports System.Runtime.InteropServices
 
 Namespace Theming
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Captures the image of a window exactly as it is displayed on screen,
     ''' including the non-client area rendered by the Desktop Window Manager (e.g. a dark title bar).
@@ -27,27 +26,22 @@ Namespace Theming
     ''' <see cref="System.Windows.Forms.Control.DrawToBitmap"/> is not used because it draws the non-client area
     ''' with the classic (light) theme, ignoring the DWM attributes of the window.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Friend NotInheritable Class WindowCapture
 
 #Region " Constants "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The HRESULT returned by DWM functions when desktop composition is disabled (Windows 7 basic theme).
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Const DWM_E_COMPOSITIONDISABLED As Integer = &H80263001
 
 #End Region
 
 #Region " Constructors "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Prevents a default instance of the <see cref="WindowCapture"/> class from being created.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Sub New()
         End Sub
 
@@ -55,22 +49,18 @@ Namespace Theming
 
 #Region " Friend Methods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Captures the visible bounds of the specified window from the screen.
         ''' <para></para>
         ''' The window must be visible and not covered by other windows (e.g. capture it before showing a dialog).
         ''' The image has the physical resolution of the screen, even if the application is not DPI aware.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <param name="windowHandle">
         ''' The handle of the window to capture.
         ''' </param>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <returns>
         ''' A 24-bit RGB <see cref="Bitmap"/> with the image of the window. The caller must dispose it.
         ''' </returns>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <exception cref="ArgumentException">
         ''' Thrown when <paramref name="windowHandle"/> is <see cref="IntPtr.Zero"/>.
         ''' </exception>
@@ -78,7 +68,6 @@ Namespace Theming
         ''' <exception cref="Win32Exception">
         ''' Thrown when the window bounds cannot be retrieved.
         ''' </exception>
-        ''' ----------------------------------------------------------------------------------------------------
         Friend Shared Function CaptureFromScreen(windowHandle As IntPtr) As Bitmap
 
             If windowHandle = IntPtr.Zero Then
@@ -117,24 +106,19 @@ Namespace Theming
             End Try
         End Function
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Gets the visible bounds of the specified window, in screen coordinates,
         ''' excluding the invisible resize borders that Windows 10 and later add around windows.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <param name="windowHandle">
         ''' The handle of the window.
         ''' </param>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <returns>
         ''' The visible bounds of the window.
         ''' </returns>
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <exception cref="Win32Exception">
         ''' Thrown when the window bounds cannot be retrieved.
         ''' </exception>
-        ''' ----------------------------------------------------------------------------------------------------
         Friend Shared Function GetVisibleBounds(windowHandle As IntPtr) As Rectangle
 
             Dim rect As NativeMethods.RECT
@@ -156,11 +140,9 @@ Namespace Theming
 
 #Region " Private Methods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Determines whether the OS supports changing the DPI awareness of a thread (Windows 10 1607 and later).
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private Shared Function IsThreadDpiAwarenessSupported() As Boolean
             Dim user32 As IntPtr = NativeMethods.GetModuleHandle("user32.dll")
             Return user32 <> IntPtr.Zero AndAlso NativeMethods.GetProcAddress(user32, "SetThreadDpiAwarenessContext") <> IntPtr.Zero
@@ -170,11 +152,9 @@ Namespace Theming
 
 #Region " NativeMethods "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Platform invocation methods, structures and constants.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private NotInheritable Class NativeMethods
 
             ''' <summary>

@@ -19,41 +19,33 @@ Imports Microsoft.VisualStudio.TestTools.UnitTesting
 
 Namespace UserControls
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Tests for the custom controls of the application 
     ''' (<see cref="InputFrame"/>, <see cref="CardPanel"/>, <see cref="ThemedNumericUpDown"/> and <see cref="CustomTextBox"/>).
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <STATestClass>
     <TestCategory("UI")>
     Public NotInheritable Class UserControlsTests
 
 #Region " Test Initialization / Cleanup "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' The culture applied to the test thread, restored after each test.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private cultureScope As Helpers.CultureScope
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Applies the culture of the default display format to the test thread, as the application does,
         ''' because the numeric up/down controls format and parse numbers with the culture of the thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestInitialize>
         Public Sub TestInitialize()
             Me.cultureScope = New Helpers.CultureScope(Global.Core.DisplayFormat.Default.Culture)
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Restores the culture of the test thread.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestCleanup>
         Public Sub TestCleanup()
             Me.cultureScope.Dispose()
@@ -63,11 +55,9 @@ Namespace UserControls
 
 #Region " Helpers "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Exposes the protected validation of <see cref="ThemedNumericUpDown"/> for testing.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         Private NotInheritable Class TestableNumericUpDown : Inherits ThemedNumericUpDown
 
             ''' <summary>
@@ -83,11 +73,9 @@ Namespace UserControls
 
 #Region " InputFrame "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the hosted control is stretched horizontally (respecting the padding) and centered vertically.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InputFrame_LaysOutHostedControl()
             Using frame As New InputFrame() With {.Size = New Size(200, 42), .Padding = New Padding(10, 0, 4, 0)},
@@ -102,11 +90,9 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the color properties round-trip and the frame is not focused by default.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InputFrame_ColorProperties_RoundTrip()
             Using frame As New InputFrame() With {
@@ -121,11 +107,9 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the frame draws its border with <see cref="InputFrame.BorderColor"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InputFrame_DrawsBorder()
             Using frame As New InputFrame() With {.Size = New Size(60, 30), .BackColor = Color.Black, .BorderColor = Color.Red},
@@ -139,11 +123,9 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the frame draws its border with <see cref="InputFrame.ErrorBorderColor"/> when it has an error.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub InputFrame_HasError_DrawsErrorBorder()
             Using frame As New InputFrame() With {.Size = New Size(60, 30), .BackColor = Color.Black, .BorderColor = Color.Red, .ErrorBorderColor = Color.Yellow},
@@ -160,11 +142,9 @@ Namespace UserControls
 
 #Region " CardPanel "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the card draws its border with <see cref="CardPanel.BorderColor"/>.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CardPanel_DrawsBorder()
             Using card As New CardPanel() With {.Size = New Size(60, 30), .BackColor = Color.White, .BorderColor = Color.Blue},
@@ -182,12 +162,10 @@ Namespace UserControls
 
 #Region " ThemedNumericUpDown "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the control can be created (the internal buttons control is found) 
         ''' and that the color properties round-trip.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ThemedNumericUpDown_ColorProperties_RoundTrip()
             Using numeric As New ThemedNumericUpDown() With {
@@ -205,12 +183,10 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the up/down buttons are painted flat with <see cref="ThemedNumericUpDown.ButtonBackColor"/>
         ''' instead of the native buttons.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ThemedNumericUpDown_PaintsFlatButtons()
             Using numeric As New ThemedNumericUpDown() With {.BorderStyle = BorderStyle.None, .Width = 120, .ButtonBackColor = Color.Magenta}
@@ -232,12 +208,10 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the typed text accepts both the dot and the comma as decimal separator,
         ''' with optional thousands separators.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1000,50", "1000.50")>
         <DataRow("1,000.50", "1000.50")>
@@ -253,11 +227,9 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that invalid typed text restores the previous value.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ThemedNumericUpDown_ValidateEditText_InvalidText_KeepsPreviousValue()
             Using numeric As New TestableNumericUpDown() With {.DecimalPlaces = 2, .Maximum = 1000000D, .Value = 42D}
@@ -268,12 +240,10 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that <see cref="ThemedNumericUpDown.TryGetEditValue"/> parses the text being typed 
         ''' without validating (reformatting) it, constrained to the minimum and maximum.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         <DataRow("1000,5", "1000.5", True)>
         <DataRow("1,000.5", "1000.5", True)>
@@ -301,11 +271,9 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that <see cref="ThemedNumericUpDown.TryGetEditValue"/> returns the value when the text is not being edited.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ThemedNumericUpDown_TryGetEditValue_NotEditing_ReturnsValue()
             Using numeric As New ThemedNumericUpDown() With {.DecimalPlaces = 2, .Maximum = 1000000D, .Value = 42.5D}
@@ -315,12 +283,10 @@ Namespace UserControls
             End Using
         End Sub
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that, when the culture uses the comma as decimal separator, ambiguous typed texts 
         ''' are read the European way, and that <see cref="ThemedNumericUpDown.RefreshText"/> reformats the text.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub ThemedNumericUpDown_CommaCulture_ParsesAndFormats()
             Dim comma As Global.Core.DisplayFormat = Global.Core.DisplayFormat.Default.WithDecimalSeparator(Global.Core.DecimalSeparatorKind.Comma)
@@ -346,11 +312,9 @@ Namespace UserControls
 
 #Region " CustomTextBox "
 
-        ''' ----------------------------------------------------------------------------------------------------
         ''' <summary>
         ''' Verifies that the hint properties round-trip.
         ''' </summary>
-        ''' ----------------------------------------------------------------------------------------------------
         <TestMethod>
         Public Sub CustomTextBox_HintProperties_RoundTrip()
             Using textBox As New CustomTextBox() With {.Hint = "0.00", .HintForeColor = Color.Orange}

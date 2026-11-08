@@ -16,51 +16,41 @@ Imports System.Windows.Forms
 
 #Region " CustomTextBox "
 
-''' ----------------------------------------------------------------------------------------------------
 ''' <summary>
 ''' A <see cref="TextBox"/> that displays a hint (placeholder text) while it is empty.
 ''' </summary>
-''' ----------------------------------------------------------------------------------------------------
 Public Class CustomTextBox : Inherits TextBox
 
 #Region " Constants "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The WM_PAINT window message.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private Const WM_PAINT As Integer = &HF
 
 #End Region
 
 #Region " Fields "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' The value of the <see cref="CustomTextBox.HintForeColor"/> property.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Private hintForeColorField As Color = SystemColors.GrayText
 
 #End Region
 
 #Region " Properties "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the hint text that is displayed while the text box is empty.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The hint text that is displayed while the text box is empty.")>
     Public Property Hint As String = ""
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Gets or sets the color of the hint text.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     <Category("Appearance")>
     <Description("The color of the hint text.")>
     Public Property HintForeColor As Color
@@ -77,11 +67,9 @@ Public Class CustomTextBox : Inherits TextBox
 
 #Region " Overridden Methods "
 
-    ''' ----------------------------------------------------------------------------------------------------
     ''' <summary>
     ''' Processes Windows messages, drawing the hint after the text box is painted.
     ''' </summary>
-    ''' ----------------------------------------------------------------------------------------------------
     Protected Overrides Sub WndProc(ByRef m As Message)
         MyBase.WndProc(m)
 
