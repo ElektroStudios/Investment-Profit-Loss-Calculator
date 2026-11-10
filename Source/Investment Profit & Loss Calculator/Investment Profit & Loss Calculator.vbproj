@@ -12,7 +12,7 @@
     <AssemblyName>Investment Profit &amp; Loss Calculator</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+    <GenerateResourceUsePreserializedResources>false</GenerateResourceUsePreserializedResources>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -134,11 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Resources.Extensions">
-      <Version>10.0.9</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
