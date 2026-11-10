@@ -276,7 +276,7 @@ Namespace Core
         Private Shared Function IsGroupedInteger(text As String, groupSeparator As Char, minimumGroups As Integer) As Boolean
             Dim escaped As String = Regex.Escape(groupSeparator.ToString())
             Dim pattern As String = $"^[+-]?[1-9][0-9]{{0,2}}({escaped}[0-9]{{3}}){{{minimumGroups},}}$"
-            Return Regex.IsMatch(text, pattern, RegexOptions.CultureInvariant)
+            Return Regex.IsMatch(text, pattern, RegexOptions.CultureInvariant, TimeSpan.FromSeconds(60))
         End Function
 
 #End Region
