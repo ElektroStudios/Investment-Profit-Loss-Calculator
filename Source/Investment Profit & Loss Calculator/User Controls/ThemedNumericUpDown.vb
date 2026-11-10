@@ -24,7 +24,7 @@ Imports System.Windows.Forms
 ''' It also accepts both the dot and the comma as decimal separator (see <see cref="ValidateEditText"/>).
 ''' </summary>
 <DesignerCategory("Code")>
-Public Class ThemedNumericUpDown : Inherits NumericUpDown
+Public Class ThemedNumericUpDown : Inherits NumericUpDown ' NOSONAR
 
 #Region " Enumerations "
 

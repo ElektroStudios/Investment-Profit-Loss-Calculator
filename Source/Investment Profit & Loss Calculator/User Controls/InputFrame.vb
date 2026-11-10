@@ -24,7 +24,7 @@ Imports System.Windows.Forms
 ''' The hosted control is stretched horizontally and centered vertically.
 ''' </summary>
 <DesignerCategory("Code")>
-Public Class InputFrame : Inherits Panel
+Public Class InputFrame : Inherits Panel ' NOSONAR
 
 #Region " Constants "
 

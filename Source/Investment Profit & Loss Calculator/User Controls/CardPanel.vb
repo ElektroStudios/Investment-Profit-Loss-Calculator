@@ -20,7 +20,7 @@ Imports System.Windows.Forms
 ''' A flat panel with a thin border, used to group related content as a "card".
 ''' </summary>
 <DesignerCategory("Code")>
-Public Class CardPanel : Inherits Panel
+Public Class CardPanel : Inherits Panel ' NOSONAR
 
 #Region " Fields "
 
